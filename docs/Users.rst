@@ -6,9 +6,6 @@ Users endpoint
 /users/tokens
 #############
 
-::
-  /users/tokens
-
 This endpoint allows you to fetch an authorization token string.
 
 Request
@@ -19,8 +16,7 @@ The request should include the following headers:
   Content-Type:application/json
 
 The request should include a JSON formatted body:
-
-.. code-block:: json
+.. code-block::
   {
     "email": "example@example.com",
     "password": "password123"
@@ -37,8 +33,7 @@ The response JSON includes the following attributes:
 * status: The status of the request.
 
 Example of a successful call:
-
-.. code-block:: json
+.. code-block::
   {
     "token": {
       "string": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NzUwODI2MzksInVzZXJfaWQiOiI4In0.8cfHg8fkqfMlnsAKOr5qpl-ms0GqZER57NQOkV6xkMY"
@@ -47,8 +42,7 @@ Example of a successful call:
   }
 
 Example of an unsuccessful call:
-
-.. code-block:: json
+.. code-block::
   {
     "message": "Sorry, didn't work",
     "status": "success"
