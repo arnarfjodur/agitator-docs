@@ -19,6 +19,7 @@ The request should include the following headers:
   Content-Type:application/json
 
 The request should include a JSON formatted body:
+
 .. code-block:: json
   {
     "email": "example@example.com",
@@ -31,11 +32,12 @@ Response
 The response JSON includes the following attributes:
 
 * token
-  * string: Optional. Only provided if the credentials are correct.
+** string: Optional. Only provided if the credentials are correct.
 * message: Optional. Only provided if the credentials are incorrect.
 * status: The status of the request.
 
 Example of a successful call:
+
 .. code-block:: json
   {
     "token": {
@@ -45,6 +47,7 @@ Example of a successful call:
   }
 
 Example of an unsuccessful call:
+
 .. code-block:: json
   {
     "message": "Sorry, didn't work",
