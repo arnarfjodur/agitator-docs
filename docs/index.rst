@@ -20,4 +20,5 @@ Indices and tables
 ==================
 
 * :ref:`index_endpoints`
+* :ref:`genindex`
 * :ref:`search`

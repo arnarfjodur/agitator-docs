@@ -6,7 +6,7 @@ Index of endpoints
 Users
 #####
 
-:ref:`rst_users`
+:ref:`users-endpoint`
 
 * /users/tokens
 

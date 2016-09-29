@@ -1,4 +1,4 @@
-.. _rst_users:
+.. _users-endpoint:
 ==============
 Users endpoint
 ==============
@@ -16,7 +16,8 @@ The request should include the following headers:
   Content-Type:application/json
 
 The request should include a JSON formatted body:
-.. code-block::
+.. code-block:: json
+
   {
     "email": "example@example.com",
     "password": "password123"
@@ -33,7 +34,7 @@ The response JSON includes the following attributes:
 * status: The status of the request.
 
 Example of a successful call:
-.. code-block::
+.. code-block:: json
   {
     "token": {
       "string": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NzUwODI2MzksInVzZXJfaWQiOiI4In0.8cfHg8fkqfMlnsAKOr5qpl-ms0GqZER57NQOkV6xkMY"
