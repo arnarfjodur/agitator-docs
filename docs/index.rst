@@ -10,7 +10,6 @@ Contents:
    :glob:
 
    introduction
-   endpoints
 
 
 Indices and tables
