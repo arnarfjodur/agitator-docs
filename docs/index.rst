@@ -9,7 +9,7 @@ Contents:
    :maxdepth: 2
    :glob:
 
-   introduction
+   *
 
 
 Indices and tables
