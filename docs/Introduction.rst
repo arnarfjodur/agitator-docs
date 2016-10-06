@@ -40,4 +40,5 @@ Pledges are contributions of **users** to **campaigns**. The amount of a success
 Endpoints
 =========
 
-* :ref:`users-endpoint`
+* :ref:`usersendpoint`
+  * :ref:`userstokens`

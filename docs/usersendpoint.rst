@@ -1,37 +1,18 @@
-.. _users-endpoint:
+.. _usersendpoint:
 ##############
 Users endpoint
 ##############
 
+General description
+===================
+
+The visitors of your website are considered guests until they authenticate (log in). Once authenticated, they become users. Users can create **campaigns**, make **pledges** and edit **campaigns** of which they are a part of (as a team member). There are some actions that can only be executed by an **administrator**. An administrator is a type of a user that has higher privileges that other users and has access to some settings that are hidden to normal users.
+
+.. _userstokens:
 /users/tokens
 =============
 
 This endpoint allows you to fetch an authorization token string.
-
-Request
-*******
-
-The request should include the following headers:
-::
-  Content-Type:application/json
-
-The request should include a JSON formatted body:
-
-.. code-block:: json
-
-  {
-    "email": "example@example.com",
-    "password": "password123"
-  }
-
-Response
-********
-
-The response contains a JSON formatted body:
-
-* token.string: Only provided if the credentials are correct.
-* message: Only provided if the credentials are incorrect.
-* status: The status of the request.
 
 Example of a successful call:
 
