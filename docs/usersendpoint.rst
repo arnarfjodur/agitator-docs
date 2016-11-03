@@ -1,4 +1,3 @@
-.. _usersendpoint:
 ##############
 Users endpoint
 ##############
@@ -8,31 +7,10 @@ General description
 
 The visitors of your website are considered guests until they authenticate (log in). Once authenticated, they become users. Users can create **campaigns**, make **pledges** and edit **campaigns** of which they are a part of (as a team member). There are some actions that can only be executed by an **administrator**. An administrator is a type of a user that has higher privileges that other users and has access to some settings that are hidden to normal users.
 
-.. _userstokens:
-/users/tokens
-=============
+Users tokens (/users/tokens)
+============================
 
 This endpoint allows you to fetch an authorization token string.
-
-Example of a successful call:
-
-.. code-block:: json
-
-  {
-    "token": {
-      "string": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NzUwODI2MzksInVzZXJfaWQiOiI4In0.8cfHg8fkqfMlnsAKOr5qpl-ms0GqZER57NQOkV6xkMY"
-    },
-    "status": "success"
-  }
-
-Example of an unsuccessful call:
-
-.. code-block:: json
-
-  {
-    "message": "Sorry, didn't work",
-    "status": "success"
-  }
 
 Examples
 ********

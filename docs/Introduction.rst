@@ -30,15 +30,9 @@ A campaign can also have several team members. Team members are users that are a
 
 Rewards
 *******
-Rewards belong to a campaign. Only authorized **users** may edit rewards. Authorized users are the camapign creator, team members and administrators.
+Rewards belong to a campaign. Only authorized **users** may edit rewards. Authorized users are the campaign creator, team members and administrators.
 
 Pledges
 *******
 
 Pledges are contributions of **users** to **campaigns**. The amount of a successful pledge is reflected in the *total funds raised* of a campaign.
-
-Endpoints
-=========
-
-* :ref:`usersendpoint`
-  * :ref:`userstokens`
