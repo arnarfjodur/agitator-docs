@@ -10,7 +10,7 @@ On error handling: All responses with code 200 should be considered successful b
 Responses should include the key "status" in the JSON which should be "success" for 200 responses, 
 but may include "error" or some other status key depending on the context.
 
-Error responses should include the field "message" which should be a human readable error message. Yup. YUP.
+Error responses should include the field "message" which should be a human readable error message. 
 
 ## Campaign rewards in a language [/campaigns/{campaign_id}/rewards/{language}/]
 
@@ -730,7 +730,7 @@ If you provide an incorrect email and/or password, the response is a JSON-format
 
 ### Create new subscription [POST]
 
-Make a monthly contribution to this campaign.
+Make a monthly contribution to this campaign. E-mail address is the address of the user to subscribe. If that user is not registered, the user account will be created.
 
 + Request (application/json)
 
@@ -755,7 +755,9 @@ Make a monthly contribution to this campaign.
 
 ## Subscription Card [/subscriptions/{subscription_id}/card/]
 
-### Update subscription's card [PUT]
+### Update subscription's credit card [PUT]
+
+"card_token" is a token that has been optained from a payment gateway to replace the actual card number.
 
 + Parameters
     + subscription_id (string) - ID of the subscription (UUID)
