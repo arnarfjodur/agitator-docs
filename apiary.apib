@@ -1,0 +1,777 @@
+FORMAT: 1A
+HOST: http://www-3soskpu83wgrrjw5s5ayqz.ngrok.io/agitator/
+
+# Agitator
+
+A campaign API for crowdfunding and sourcing.
+
+On error handling: All responses with code 200 should be considered successful but 5xx or 4xx not. 
+
+Responses should include the key "status" in the JSON which should be "success" for 200 responses, 
+but may include "error" or some other status key depending on the context.
+
+Error responses should include the field "message" which should be a human readable error message.
+
+## Campaign rewards in a language [/campaigns/{campaign_id}/rewards/{language}/]
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+    + language (string) - The preferred language to return, i.e. en, is, fi
+
+### Get rewards for a campaign [GET]
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "rewards": [
+                    
+                    {
+                        "reward_id": "a2652252-837d-4176-883f-b6363c17c87d",
+                        "title": "A digital copy of the CD",
+                        "amount": 30,
+                        "description": "You get a copy of the CD with some nice artwork",
+                        "image": "/projects/123/12298234.jpg",
+                        "custom_questions": []
+                    },
+                    {
+                        "reward_id": "9a638e9c-6f5f-4aba-9d1f-2468241ab987",
+                        "title": "The CD plus concert",
+                        "amount": 70,
+                        "description": "You get a copy of the CD and a ticket to the concert",
+                        "image": "/projects/123/92348123.jpg",
+                        "custom_questions": [
+                            "To what address should we ship the CD?",
+                            "In what city would you like us to hold the concert?"
+                        ]
+                    },
+                    {
+                        "reward_id": "945558f4-1211-4feb-ac9a-7c7037af745b",
+                        "title": "A private concert",
+                        "amount": 800,
+                        "description": "A private concert in your home.",
+                        "image": "/projects/123/24234.jpg",
+                        "custom_questions": []
+                        
+                    }
+                ]
+            }
+
+
+## Campaign rewards [/campaigns/{campaign_id}/rewards/]
+
+### Create new reward [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+    
+    + Body
+    
+                {
+                    reward: {
+                        "reward_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
+                    }
+                }
+
+## Particular reward [/rewards/{reward_id}]
+
+### Remove reward [DELETE]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+
++ Response 200 (application/json)
+
+    + Body
+    
+                {
+                    message: "success"
+                }
+
+
+
+### Update reward [PATCH]
+
+Updates the reward by replacing it with the provided data. What is not provided does not get updated.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "amount": 45,
+              "image": "filename.jpg",
+              "stock": 49,
+              "vat_percentage": 24.5
+            }
+
++ Response 200 (application/json)
+
+                {
+                    "reward_id": "21"
+                    "status": "success"
+                }
+
+## Particular reward language [/rewards/{reward_id}/{language}]
+
++ Parameters
+    + reward_id (string) - ID of the campaign
+    + language (string) - The preferred language to return, i.e. en, is, fi
+
+### Get single reward language [GET]
+
+NOTE: Todo. This method is not impemented yet.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "amount": 45,
+              "title": {
+                "en": "A CD plus concert in a home",
+                "is": "Geisladiskur og tónleikar"
+              },
+              "description": {
+                "en": "A private concert in your home",
+                "is": "Einkatónleikar heima hjá þér"
+              },
+              "image": "/projects/123/24234.jpg",
+              "custom_questions": [
+                {
+                  "en": "What is the delivery address?",
+                  "is": "Hvaða heimilisfang á að senda á?"
+                }
+              ]
+            }
+            
+# Particular reward language [/rewards/{reward_id}/language]
+
++ Parameters
+    + reward_id (string) - ID of the campaign
+
+### Update single reward language [PATCH]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+    
+    + Body
+    
+            {
+                "description": {
+                    "en": "You get a very nice CD in a box."
+                },
+                "title": {
+                    "en": "A CD"
+                }
+        
+            }   
+
++ Response 200 (application/json)
+
+              
+
+## Campaigns [/campaigns/]    
+
+Campaigns are crowdfunding projects.
+
+### Create new campaign [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+    
+    + Body
+    
+                {
+                    "campaign": {
+                        "campaign_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
+                    }
+                }
+
+
+## Campaigns preview [/campaigns/preview/{language}/]    
+
++ Parameters
+    + language (string) - The preferred language to return, i.e. en, is, fi
+
+### Get campaigns preview [GET]
+
+Returns a list of campaigns that are funding or have been funding. Includes only basic
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+              "campaigns": [
+                {
+                  "campaign_id": 131,
+                  "title": "A campaign",
+                  "short_description": "My great campaign!",
+                  "target_goal": 20,
+                  "min_goal": 2,
+                  "category_id": "3",
+                  "stage": 3,
+                  "funding_reached": 8,
+                  "funding_deadline": 1467061200,
+                  "last_day_of_funding": "2016-06-26",
+                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/131/medium/1053632624319a7e91b789c0075b8949.jpg"
+                },
+                {
+                  "campaign_id": 132,
+                  "title": "Vajaaksi jäävä testikampanja",
+                  "short_description": "Nyt lähtee! (Ehkä)",
+                  "target_goal": 100,
+                  "min_goal": 50,
+                  "category_id": "3",
+                  "stage": 5,
+                  "funding_reached": 0,
+                  "funding_deadline": 1467061200,
+                  "last_day_of_funding": "2016-06-26",
+                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/132/medium/42927d7df51536e624e86d462992920f.jpg"
+                },
+                {
+                  "campaign_id": 114,
+                  "title": "Arnar's test project",
+                  "short_description": "This is a great project!",
+                  "target_goal": 3000,
+                  "min_goal": 2000,
+                  "category_id": "378",
+                  "stage": 5,
+                  "funding_reached": 0,
+                  "funding_deadline": 556491600,
+                  "last_day_of_funding": "2017-08-19",
+                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/114/medium/03e1fbff1d0b08e83829110ae99aea4d.jpg"
+                }
+              ]
+            }
+
+## Single campaign [/campaigns/{campaign_id}/{language}]    
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+    + language (string) - The preferred language to return, i.e. en, is, fi
+
+### Get campaign [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+              "campaign": {
+                "campaign_id": "175",
+                "title": "Creative campaign",
+                "short_description": "This is a new campaign! It's about funding creativity together.",
+                "tagline": "Creative together",
+                "json_description": "{\"data\":[{\"type\":\"text\",\"data\":{\"text\":\"<p>Here's some info.</p>\",\"format\":\"html\"}}]}",
+                "html_description": "<p class='profile_content_text'><p>Here's some info.</p></p>",
+                "target_goal": "20000",
+                "min_goal": 1000,
+                "video_url": null,
+                "meta": {
+                  "external_link_1": "https://www.karolinafund.com/"
+                },
+                "video_embed_code": null,
+                "stage": 2,
+                "funding_reached": 6,
+                "funding_deadline": 1535749200,
+                "last_day_of_funding": "2018-08-30",
+                "first_day_of_funding": "2016-07-30",
+                "funding_start": 1469912400,
+                "number_of_backers": 1,
+                "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg",
+                "creator_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png",
+                "rewards": [
+                  {
+                    "reward_id": 139,
+                    "stock_reserved": 1,
+                    "vat_percentage": "10.0000",
+                    "stock": 12,
+                    "amount": 1,
+                    "title": "A Book",
+                    "description": "",
+                    "image": null
+                  },
+                  {
+                    "reward_id": 140,
+                    "stock_reserved": 0,
+                    "vat_percentage": null,
+                    "stock": null,
+                    "amount": 1,
+                    "title": null,
+                    "description": "",
+                    "image": null
+                  },
+                  {
+                    "reward_id": 133,
+                    "stock_reserved": 4,
+                    "vat_percentage": "0.0000",
+                    "stock": null,
+                    "amount": 100,
+                    "title": "This is the reward that you will get!",
+                    "description": "Here is some info for you, yes sir!",
+                    "image": null
+                  },
+                  {
+                    "reward_id": 141,
+                    "stock_reserved": 0,
+                    "vat_percentage": "10.0000",
+                    "stock": null,
+                    "amount": 10000,
+                    "title": "Very big reward, indeed",
+                    "description": "",
+                    "image": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/a88a56eb1417cef1c13b58bb83a28fea.jpg"
+                  }
+                ]
+              },
+              "acl": [
+                "view",
+                "edit",
+                "admin"
+              ]
+            }
+
+## Campaign settings [/campaigns/{campaign_id}/settings/]  
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Update campaign settings [PATCH]
+
+Update, completely or partially, campaign settings. 
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "min_goal": 1000,
+              "video_url": "https://www.youtube.com/ljsdf",
+              "target_goal": 1500,
+              "last_day_of_funding": "2016-12-09",
+              "first_day_of_funding": "2016-10-09",
+              "project_pic": "projectpicture.jpg",
+              "creator_pic": "pictureofcreator.jpg",
+              "contact_email": "arnar@karolinafund.com".
+              "legal_creator": "Karolina Fund ehf" 
+            }
+
++ Response 200 (application/json)
+
+## Campaign language [/campaigns/{campaign_id}/{language}/]  
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+    + language (string) - The code for the preferred language
+
+### Update campaign language [PATCH]
+
+Update, completely or partially, campaign language (anything translatable). 
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+                "short_description": {
+                    "en": "This project is all about making my debut CD."
+                },
+                "json_description": {
+                    "en": "...."
+                },
+                "title": {
+                    "en": "This is a creatie project"
+                },
+                "tagline": {
+                    "en": "My Creative project"
+                },
+
+            }              
+ 
++ Response 200 (application/json)
+
+## Campaign meta [/campaigns/{campaign_id}/meta/]  
+
+Any aribtrary key:value to be stored on the campaign.
+
+### Update meta [PATCH]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "external_link_2": "https://www.karolinafund.com"
+            }
+
++ Response 200 (application/json)
+
+## My campaigns [/campaigns/my_campaigns/preview]  
+
+Returns all the campaigns that the current authenticated user owns.
+
+### Get my campaigns [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "campaigns": [
+                {
+                  "campaign_id": "115",
+                  "title": "Arnar again",
+                  "short_description": "Jepps jepps",
+                  "target_goal": 0,
+                  "min_goal": 500,
+                  "category_id": null,
+                  "stage": 0,
+                  "funding_reached": 0,
+                  "funding_deadline": 0,
+                  "last_day_of_funding": "1969-12-31",
+                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
+                },
+                {
+                  "campaign_id": "136",
+                  "title": "New project with a start date",
+                  "short_description": "Hello.",
+                  "target_goal": 0,
+                  "min_goal": 100,
+                  "category_id": null,
+                  "stage": 0,
+                  "funding_reached": 0,
+                  "funding_deadline": 1467147600,
+                  "last_day_of_funding": "2016-06-27",
+                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
+                },
+                {
+                  "campaign_id": "139",
+                  "title": "New project",
+                  "short_description": null,
+                  "target_goal": 0,
+                  "min_goal": 0,
+                  "category_id": null,
+                  "stage": 0,
+                  "funding_reached": 0,
+                  "funding_deadline": 0,
+                  "last_day_of_funding": "1969-12-31",
+                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
+                }
+              ]
+            }
+            
+            
+## Campaign admin [/campaigns/{campaign_id}/admin/]  
+
+The part of the campaign that only an admin can change
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Get campaign admin [GET]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+        
+        {
+          "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
+          "stage": 2,
+          "contact_email": "arnar@karolinafund.com",
+          "category_id": "23",
+          "scope": null,
+          "legal_creator": "Karolina Fund ehf",
+          "commission_pertrans": "0.20",
+          "commission_percent": "5.1000"
+        }
+
+### Update campaign admin [PATCH]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+    
+    + Body
+    
+            {
+              "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
+              "stage": 2,
+              "contact_email": "arnar@karolinafund.com",
+              "category_id": "23",
+              "scope": null,
+              "legal_creator": "Karolina Fund ehf",
+              "commission_pertrans": "0.20",
+              "commission_percent": "5.1000"
+            }
+
++ Response 200 (application/json)
+
+## Campaign pledges [/campaigns/{campaign_id}/pledges/]  
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Make a new pledge [POST]
+
+Note: Currently this methods takes info from the meta and uses that to attribute the pledge.
+This may be strange.
+
+The "pledge_meta" must include the fields email, first_name and last_name. The field email must be a valid e-mail address.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+            
+    + Body
+
+            {
+              "amount": "1",
+              "pledge_meta": {
+                "email": "arnar@karolinafund.com",
+                "first_name": "Arnar",
+                "last_name": "Sigurdsson",
+                "address_street": "Thorsgata 7",
+                "address_postcode": "101",
+                "address_city": "Reykjavik",
+                "address_country": "Iceland"
+              },
+              "reward_id": "22"
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "pledge": {
+                "pledge_id":"52c0f3e9-883d-45c4-8409-69f09e01bea6"
+              }
+            }
+
+
+## Campaign files [/campaigns/{campaign_id}/files/]  
+
+Note: Need to check out better, is this being used?
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Upload a new file [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+            
++ Response 200 (application/json)
+
+            {
+              "file": {
+                "name":"i2lkmi324oimsd.jpg"
+              }
+            }
+
+## Payment page [/pledges/{pledge_id}/payment_page/{payment_method}/]  
+
+The payment_method parameter is usually "credit_card" but some platforms may have other options like "paytrail" for Mesenaatti.
+
+The success_url, cancel_url and fail_url fields in the body should include urls that the user gets redirected to after performing the payment depending on 
+if the payment was successful, cancelled or failed. How this is handled may depend on payment methods.
+
+
++ Parameters
+    + pledge_id (string) - ID of the pledge
+    + payment_method (string)
+    
+### Create a link to an externally hosted payment page [POST]
+
++ Request (application/json)
+
+            {
+              "success_url": "http://www.example.com/success/",
+              "cancel_url": "http://www.example.com/cancel/",
+              "fail_url": "http://www.example.com/fail/"
+              
+            }
++ Response 200 (application/json)
+    
+            {
+              "payment_page": {
+                "url":"https://www.lemonway.fr/paymentpage/?token=dkak238734l"
+              }
+            }
+            
+
+## Pre-Authorization [/pledges/{pledge_id}/preauthorization/]  
+
+Pre-Authorization a payment on a card using a payment token.
+
+
++ Parameters
+    + pledge_id (string) - ID of the pledge
+    
+### Create a payment  [POST]
+
++ Request (application/json)
+
+            {
+              "card_token": "xxxx_oijwerlkjlksdfk"
+
+            }
++ Response 200 (application/json)
+    
+            {
+              "status": "success"
+            }
+            
+
+## Users tokens [/users/tokens/]
+
+
+### Generate a token for authenticating a user [POST]
+Generates an authentication token for a user. 
+If you provide an incorrect email and/or password, the response is a JSON-formatted message.
+
++ Request (application/json)
+
+    
+    
+    + Body
+
+            {
+              "email": "example@example.com",
+              "password": "password123"
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "token": {
+                "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
+              }
+            }
+            
++ Response 200 (application/json)
+
+        {
+            "message":"Sorry, didn't work"
+        }
+
+## Subscription to campaign [/campaigns/{campaign_id}/subscriptions/]
+
++ Parameters
+    + campaign_id (string) - ID of the campaign you want to subscribe to
+
+### Create new subscription [POST]
+
+Make a monthly contribution to this campaign.
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "amount": 10,
+                "email":"arnar@karolinafund.com",
+                "first_name": "Arnar",
+                "last_name": "Sigurdsson"
+            
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success",
+              "subscription": {
+                "id": "lkjsadflkj_lkjsdf"
+              }
+            }
+
+## Subscription Card [/subscriptions/{subscription_id}/card/]
+
+### Update subscription's card [PUT]
+
++ Parameters
+    + subscription_id (string) - ID of the subscription (UUID)
+
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "card_token": "xxxxxxx_yyyy"
+            
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success"
+            }
