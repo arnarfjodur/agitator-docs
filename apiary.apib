@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://sandbox.karolina.io/agitator/
+HOST: https://sandbox.karolina.io/agitator
 
 # Agitator
 
@@ -11,6 +11,8 @@ Responses should include the key "status" in the JSON which should be "success" 
 but may include "error" or some other status key depending on the context.
 
 Error responses should include the field "message" which should be a human readable error message. 
+
+# Group Rewards
 
 ## Campaign rewards in a language [/campaigns/{campaign_id}/rewards/{language}/]
 
@@ -193,7 +195,7 @@ NOTE: Todo. This method is not impemented yet.
 
 + Response 200 (application/json)
 
-              
+# Group Campaigns              
 
 ## Campaigns [/campaigns/]    
 
@@ -570,6 +572,33 @@ The part of the campaign that only an admin can change
 
 + Response 200 (application/json)
 
+
+## Campaign files [/campaigns/{campaign_id}/files/]  
+
+Note: Need to check out better, is this being used?
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Upload a new file [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer {JWToken}
+
+            
++ Response 200 (application/json)
+
+            {
+              "file": {
+                "name":"i2lkmi324oimsd.jpg"
+              }
+            }
+
+# Group Pledges
+
 ## Campaign pledges [/campaigns/{campaign_id}/pledges/]  
 
 + Parameters
@@ -612,30 +641,6 @@ The "pledge_meta" must include the fields email, first_name and last_name. The f
               }
             }
 
-
-## Campaign files [/campaigns/{campaign_id}/files/]  
-
-Note: Need to check out better, is this being used?
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-
-### Upload a new file [POST]
-
-+ Request (application/json)
-
-    + Headers
-    
-            Authorization: Bearer {JWToken}
-
-            
-+ Response 200 (application/json)
-
-            {
-              "file": {
-                "name":"i2lkmi324oimsd.jpg"
-              }
-            }
 
 ## Payment page [/pledges/{pledge_id}/payment_page/{payment_method}/]  
 
@@ -691,6 +696,9 @@ Pre-Authorization a payment on a card using a payment token.
             }
             
 
+# Group Users
+
+
 ## Users tokens [/users/tokens/]
 
 
@@ -722,6 +730,9 @@ If you provide an incorrect email and/or password, the response is a JSON-format
         {
             "message":"Sorry, didn't work"
         }
+
+# Group Subscriptions
+
 
 ## Subscription to campaign [/campaigns/{campaign_id}/subscriptions/]
 
