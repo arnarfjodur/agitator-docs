@@ -391,7 +391,18 @@ The part of the campaign that only an admin can change
 
 ## Campaign files [/campaigns/{campaign_id}/files/]  
 
-Note: Need to check out better, is this being used?
+You need to provide the file in the body, encoded as form-data.
+Note:
+The body should include the following:
+
+    -------------------------<boundary-offset>
+    Content-Disposition: form-data; name="file"; filename="<filename>.<extension>"
+    Content-Type: image/<extension>
+    
+    <raw-image-data>
+    -------------------------<boundary-offset>
+    
+Especially important is the key **name="file"**, which has to be exactly that and not for example the name of the input field.
 
 + Parameters
     + campaign_id (string) - ID of the campaign
@@ -401,7 +412,7 @@ Note: Need to check out better, is this being used?
 + Request (application/json)
 
     + Headers
-    
+            
             Authorization: Bearer {JWToken}
 
             
