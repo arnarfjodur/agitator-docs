@@ -709,6 +709,7 @@ Pre-Authorization a payment on a card using a payment token.
 
 # Group Users
 
+## Users tokens [/users/loggins/]
 
 ## Users tokens [/users/tokens/]
 
@@ -771,10 +772,12 @@ Make a monthly contribution to this campaign. E-mail address is the address of t
             {
               "status": "success",
               "subscription": {
-                "id": "lkjsadflkj_lkjsdf"
+                "id": "c793d593-c3cd-4333-b57f-ab31edbef5cb"
+              },
+              "payment_page": {
+                "url": "https://sandbox.karolina.io/subscription/token/form/c793d593-c3cd-4333-b57f-ab31edbef5cb"
               }
             }
-
 ## Subscription Card [/subscriptions/{subscription_id}/card/]
 
 ### Update subscription's credit card [PUT]
