@@ -709,7 +709,37 @@ Pre-Authorization a payment on a card using a payment token.
 
 # Group Users
 
-## Users tokens [/users/loggins/]
+## Users (TODO) [/users/]
+
+### Register a new user [POST]
+
+Use method to create a new user. Will return a valid auth token for that user after registering.
+
++ Request (application/json)
+
+    + Body
+
+            {
+              "email": "example@example.com",
+              "password": "password123",
+              "first_name": "Arnar",
+              "last_name": "Sigurdsson"
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "token": {
+                "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
+              }
+            }
+            
++ Response 500 (application/json)
+
+        {   
+            "status": "email_already_exists",
+            "message":"Sorry, didn't work"
+        }
 
 ## Users tokens [/users/tokens/]
 
