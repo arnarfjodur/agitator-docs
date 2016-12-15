@@ -44,7 +44,7 @@ Campaigns are crowdfunding projects.
 
 ### Get campaigns preview [GET]
 
-Returns a list of campaigns that are funding or have been funding. Includes only basic
+Returns a list of campaigns that are funding or have been funding. Includes only basic information for preview.
 
 + Request (application/json)
 
@@ -493,7 +493,7 @@ Especially important is the key **name="file"**, which has to be exactly that an
                     }
                 }
 
-## Particular reward [/rewards/{reward_id}]
+## Single reward [/rewards/{reward_id}]
 
 ### Remove reward [DELETE]
 
@@ -540,7 +540,7 @@ Updates the reward by replacing it with the provided data. What is not provided 
                     "status": "success"
                 }
 
-## Particular reward language [/rewards/{reward_id}/{language}]
+## Single reward language [/rewards/{reward_id}/{language}]
 
 + Parameters
     + reward_id (string) - ID of the campaign
@@ -580,14 +580,14 @@ NOTE: Todo. This method is not impemented yet.
               ]
             }
             
-# Particular reward language [/rewards/{reward_id}/language]
+# Single reward language [/rewards/{reward_id}/language]
 
 + Parameters
     + reward_id (string) - ID of the campaign
 
 ### Update single reward language [PATCH]
 
-+ Request (application/json)
++ Request  (application/json)
 
     + Headers
     
@@ -622,7 +622,7 @@ This may be strange.
 
 The "pledge_meta" must include the fields email, first_name and last_name. The field email must be a valid e-mail address.
 
-+ Request (application/json)
++ Request  (application/json)
 
     + Headers
     
@@ -667,7 +667,7 @@ if the payment was successful, cancelled or failed. How this is handled may depe
     
 ### Create a link to an externally hosted payment page [POST]
 
-+ Request (application/json)
++ Request  (application/json)
 
             {
               "success_url": "http://www.example.com/success/",
@@ -694,7 +694,7 @@ Pre-Authorization a payment on a card using a payment token.
     
 ### Create a payment  [POST]
 
-+ Request (application/json)
++ Request  (application/json)
 
             {
               "card_token": "xxxx_oijwerlkjlksdfk"
@@ -743,14 +743,10 @@ Use method to create a new user. Will return a valid auth token for that user af
 
 ## Users tokens [/users/tokens/]
 
-
 ### Generate a token for authenticating a user [POST]
 Generates an authentication token for a user. 
-If you provide an incorrect email and/or password, the response is a JSON-formatted message.
 
-+ Request (application/json)
-
-    
++ Request  (application/json)
     
     + Body
 
@@ -773,6 +769,28 @@ If you provide an incorrect email and/or password, the response is a JSON-format
             "message":"Sorry, didn't work"
         }
 
+## Users profiles [/users/{userId}/profile/]
+
+### Get profile [GET]
+
+Get the user's profile
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    
+            {
+              "profile": {
+                "first_name":"John".
+                "last_name":"Smith",
+                "short_description": "A professor of applied sciences",
+                "html_description": "<h1>This is who I am</h1>"
+              }
+            }
+            
+
+
+
 # Group Subscriptions
 
 
@@ -785,7 +803,7 @@ If you provide an incorrect email and/or password, the response is a JSON-format
 
 Make a monthly contribution to this campaign. E-mail address is the address of the user to subscribe. If that user is not registered, the user account will be created.
 
-+ Request (application/json)
++ Request  (application/json)
 
     + Body
 
@@ -812,13 +830,13 @@ Make a monthly contribution to this campaign. E-mail address is the address of t
 
 ### Update subscription's credit card [PUT]
 
-"card_token" is a token that has been optained from a payment gateway to replace the actual card number.
+Save a credit card to use when charging subscription. "card_token" is a token that has been optained from a payment gateway to replace the actual card number (functionality outside of this API). This method works only when using payment gateways that support such tokens, i.e. Borgun RPG.
 
 + Parameters
     + subscription_id (string) - ID of the subscription (UUID)
 
 
-+ Request (application/json)
++ Request  (application/json)
 
     + Body
 
@@ -832,3 +850,206 @@ Make a monthly contribution to this campaign. E-mail address is the address of t
             {
               "status": "success"
             }
+
+# Group Discussion
+
+TODO: A discussion (comments) can happen on campaigns.
+
+# Group Tags
+
+TODO: Profiles and campaigns (and more?) can have tags.
+
+- Add tag (to campaign or profile)
+- Remove tag.
+- Get tags (from campaign or profile)
+- Get all tags
+- Search tags (for autocomplete) 
+
+
+## Tags [/tags/]
+
+### Add new tag [POST]
+
++ Request  (application/json)
+
+    + Body 
+
+            {
+              "label": {
+                "en": "cars",
+                "es": "autos"
+              }                
+            }
+
++ Response 200 (application/json)
+
+            {
+              "id": "202"
+            }
+
+### Get all tags [GET]
+
++ Request  (application/json)
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success",
+              "tags": [
+                {
+                  "id": "123",
+                  "label": {
+                    "en": "animals",
+                    "es": "animales"
+                  }
+                },
+                {
+                  "id": "281",
+                  "label": {
+                    "en": "children",
+                    "es": "niño"
+                  }
+                },
+                {
+                  "id": "202",
+                  "label": {
+                    "en": "cars",
+                    "es": "autos"
+                  }
+                }
+
+              ]
+            }
+
+## Search for tags [/tags/searches/]
+
+### Find tags [POST]
+
+To search for a tag by it's label. Supply the full or partial label.
+
++ Request  (application/json)
+
+    + Body
+
+            {
+                "term": "ani"
+            
+            }
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success",
+              "tags": [
+                {
+                  "id": "123",
+                  "label": {
+                    "en": "animals",
+                    "es": "animales"
+                  }
+                }
+              ]
+            }
+
+## Campaign tags [/campaigns/{campaign_id}/tags/]
+
+### Get tags for campaign [GET]
+
++ Request  (application/json)
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success",
+              "tags": [
+                {
+                  "id": "123",
+                  "label": {
+                    "en": "animals",
+                    "es": "animales"
+                  }
+                },
+                {
+                  "id": "281",
+                  "label": {
+                    "en": "children",
+                    "es": "niño"
+                  }
+                },
+                {
+                  "id": "202",
+                  "label": {
+                    "en": "cars",
+                    "es": "autos"
+                  }
+                }
+
+              ]
+            }
+
+### Add tag to campaign [POST]
+
++ Request  (application/json)
+
+    + Body 
+
+            {
+              "id": "987"
+            }
+
+
++ Response 200 (application/json)
+
+## Profiles tags [/profiles/{profile_id}/tags/]
+
+### Get tags for profile [GET]
+
++ Request  (application/json)
+
++ Response 200 (application/json)
+    
+            {
+              "status": "success",
+              "tags": [
+                {
+                  "id": "123",
+                  "label": {
+                    "en": "animals",
+                    "es": "animales"
+                  }
+                },
+                {
+                  "id": "281",
+                  "label": {
+                    "en": "children",
+                    "es": "niño"
+                  }
+                },
+                {
+                  "id": "202",
+                  "label": {
+                    "en": "cars",
+                    "es": "autos"
+                  }
+                }
+
+              ]
+            }
+
+### Add tag to profile [POST]
+
++ Request  (application/json)
+
+    + Body 
+
+            {
+              "id": "234"
+            }
+
+
++ Response 200 (application/json)
+
+# Group Questions
+
+TODO:: There are 
+
