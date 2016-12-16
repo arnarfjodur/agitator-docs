@@ -769,10 +769,7 @@ Generates an authentication token for a user.
             "message":"Sorry, didn't work"
         }
 
-## Users profiles [/users/{user_id}/profile/]
-
-+ Parameters
-    + user_id (string) - ID of the user
+## Users profiles [/users/{userId}/profile/]
 
 ### Get profile [GET]
 
@@ -784,67 +781,14 @@ Get the user's profile
     
             {
               "profile": {
-                "first_name":"John",
+                "first_name":"John".
                 "last_name":"Smith",
                 "short_description": "A professor of applied sciences",
-                "long_description": "<h1>This is who I am</h1>"
+                "html_description": "<h1>This is who I am</h1>"
               }
             }
             
-## My profile [/users/me/profile]
 
-Get the currently logged in user's profile
-
-+ Request (application/json)
-
-+ Response 200 (application/json)
-    
-            {
-              "profile": {
-                "first_name":"John",
-                "last_name":"Smith",
-                "short_description": "A professor of applied sciences",
-                "long_description": "<h1>This is who I am</h1>"
-              }
-            }
-
-### Update my profile [PATCH]
-
-+ Request (application/json)
-
-            {
-              "first_name":"John",
-              "last_name":"Smith",
-              "short_description": "A professor of applied sciences",
-              "long_description": "<h1>This is who I am</h1>"
-            }
-
-+ Response 200 (application/json)
-
-+ Response 401 (application/json)
-  
-            {
-              "status":"invalid_login"
-            }
-
-## My password [/users/me/password/]
-
-### Change my password [POST]
-
-+ Request (application/json)
-
-            {
-              "new_password":"hello123",
-              "old_password": "iloveu"
-            }
-
-+ Response 200 (application/json)
-
-+ Response 401 (application/json)
-  
-            {
-              "status":"invalid_login"
-            }
 
 
 # Group Subscriptions
