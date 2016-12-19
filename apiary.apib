@@ -3,18 +3,18 @@ HOST: https://sandbox.karolina.io/agitator
 
 # Agitator
 
-A campaign API for crowdfunding and sourcing.
+A campaign API for crowdfunding and crowdsourcing.
 
-**On error handling:** All responses with code 200 should be considered successful but 5xx or 4xx not. 
+**On error handling:** All responses with code 200 should be considered successful but 5xx or 4xx not.
 
-Responses should include the key "status" in the JSON which should be "success" for 200 responses, 
+Responses should include the key "status" in the JSON which should be "success" for 200 responses,
 but may include "error" or some other status key depending on the context.
 
-Error responses should include the field "message" which should be a human readable error message. 
+Error responses should include the field "message" which should be a human readable error message.
 
-# Group Campaigns              
+# Group Campaigns
 
-## Campaigns [/campaigns/]    
+## Campaigns [/campaigns/]
 
 Campaigns are crowdfunding projects.
 
@@ -23,13 +23,13 @@ Campaigns are crowdfunding projects.
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 + Response 200 (application/json)
-    
+
     + Body
-    
+
                 {
                     "campaign": {
                         "campaign_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
@@ -37,7 +37,7 @@ Campaigns are crowdfunding projects.
                 }
 
 
-## Campaigns preview [/campaigns/preview/{language}/]    
+## Campaigns preview [/campaigns/preview/{language}/]
 
 + Parameters
     + language (string) - The preferred language to return, i.e. en, is, fi
@@ -51,7 +51,7 @@ Returns a list of campaigns that are funding or have been funding. Includes only
 + Response 200 (application/json)
 
     + Body
-    
+
             {
               "campaigns": [
                 {
@@ -96,7 +96,7 @@ Returns a list of campaigns that are funding or have been funding. Includes only
               ]
             }
 
-## Single campaign [/campaigns/{campaign_id}/{language}]    
+## Single campaign [/campaigns/{campaign_id}/{language}]
 
 + Parameters
     + campaign_id (string) - ID of the campaign
@@ -107,14 +107,14 @@ Returns a list of campaigns that are funding or have been funding. Includes only
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 
 + Response 200 (application/json)
 
     + Body
-    
+
             {
               "campaign": {
                 "campaign_id": "175",
@@ -189,19 +189,19 @@ Returns a list of campaigns that are funding or have been funding. Includes only
               ]
             }
 
-## Campaign settings [/campaigns/{campaign_id}/settings/]  
+## Campaign settings [/campaigns/{campaign_id}/settings/]
 
 + Parameters
     + campaign_id (string) - ID of the campaign
 
 ### Update campaign settings [PATCH]
 
-Update, completely or partially, campaign settings. 
+Update, completely or partially, campaign settings.
 
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
     + Body
@@ -215,24 +215,24 @@ Update, completely or partially, campaign settings.
               "project_pic": "projectpicture.jpg",
               "creator_pic": "pictureofcreator.jpg",
               "contact_email": "arnar@karolinafund.com".
-              "legal_creator": "Karolina Fund ehf" 
+              "legal_creator": "Karolina Fund ehf"
             }
 
 + Response 200 (application/json)
 
-## Campaign language [/campaigns/{campaign_id}/language/]  
+## Campaign language [/campaigns/{campaign_id}/language/]
 
 + Parameters
     + campaign_id (string) - ID of the campaign
 
 ### Update campaign language [PATCH]
 
-Update, completely or partially, campaign language (anything translatable). 
+Update, completely or partially, campaign language (anything translatable).
 
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
     + Body
@@ -251,11 +251,11 @@ Update, completely or partially, campaign language (anything translatable).
                     "en": "My Creative project"
                 },
 
-            }              
- 
+            }
+
 + Response 200 (application/json)
 
-## Campaign meta [/campaigns/{campaign_id}/meta/]  
+## Campaign meta [/campaigns/{campaign_id}/meta/]
 
 Any aribtrary key:value to be stored on the campaign.
 
@@ -264,7 +264,7 @@ Any aribtrary key:value to be stored on the campaign.
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
     + Body
@@ -275,7 +275,7 @@ Any aribtrary key:value to be stored on the campaign.
 
 + Response 200 (application/json)
 
-## My campaigns [/campaigns/my_campaigns/preview]  
+## My campaigns [/campaigns/my_campaigns/preview]
 
 Returns all the campaigns that the current authenticated user owns.
 
@@ -284,7 +284,7 @@ Returns all the campaigns that the current authenticated user owns.
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 + Response 200 (application/json)
@@ -334,9 +334,9 @@ Returns all the campaigns that the current authenticated user owns.
                 }
               ]
             }
-            
-            
-## Campaign admin [/campaigns/{campaign_id}/admin/]  
+
+
+## Campaign admin [/campaigns/{campaign_id}/admin/]
 
 The part of the campaign that only an admin can change
 
@@ -348,12 +348,12 @@ The part of the campaign that only an admin can change
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 + Response 200 (application/json)
 
-        
+
         {
           "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
           "stage": 2,
@@ -370,11 +370,11 @@ The part of the campaign that only an admin can change
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
-    
+
     + Body
-    
+
             {
               "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
               "stage": 2,
@@ -389,7 +389,7 @@ The part of the campaign that only an admin can change
 + Response 200 (application/json)
 
 
-## Campaign files [/campaigns/{campaign_id}/files/]  
+## Campaign files [/campaigns/{campaign_id}/files/]
 
 You need to provide the file in the body, encoded as form-data.
 Note:
@@ -398,10 +398,10 @@ The body should include the following:
     -------------------------<boundary-offset>
     Content-Disposition: form-data; name="file"; filename="<filename>.<extension>"
     Content-Type: image/<extension>
-    
+
     <raw-image-data>
     -------------------------<boundary-offset>
-    
+
 Especially important is the key **name="file"**, which has to be exactly that and not for example the name of the input field.
 
 + Parameters
@@ -412,10 +412,10 @@ Especially important is the key **name="file"**, which has to be exactly that an
 + Request (application/json)
 
     + Headers
-            
+
             Authorization: Bearer {JWToken}
 
-            
+
 + Response 200 (application/json)
 
             {
@@ -437,10 +437,10 @@ Especially important is the key **name="file"**, which has to be exactly that an
 + Response 200 (application/json)
 
     + Body
-    
+
             {
                 "rewards": [
-                    
+
                     {
                         "reward_id": "a2652252-837d-4176-883f-b6363c17c87d",
                         "title": "A digital copy of the CD",
@@ -467,7 +467,7 @@ Especially important is the key **name="file"**, which has to be exactly that an
                         "description": "A private concert in your home.",
                         "image": "/projects/123/24234.jpg",
                         "custom_questions": []
-                        
+
                     }
                 ]
             }
@@ -480,13 +480,13 @@ Especially important is the key **name="file"**, which has to be exactly that an
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 + Response 200 (application/json)
-    
+
     + Body
-    
+
                 {
                     reward: {
                         "reward_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
@@ -498,16 +498,16 @@ Especially important is the key **name="file"**, which has to be exactly that an
 ### Remove reward [DELETE]
 
 + Request (application/json)
-    
+
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 
 + Response 200 (application/json)
 
     + Body
-    
+
                 {
                     message: "success"
                 }
@@ -521,7 +521,7 @@ Updates the reward by replacing it with the provided data. What is not provided 
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
     + Body
@@ -540,20 +540,20 @@ Updates the reward by replacing it with the provided data. What is not provided 
                     "status": "success"
                 }
 
-## Single reward language [/rewards/{reward_id}/{language}]
+## Single reward [/rewards/{reward_id}/{language}]
 
 + Parameters
     + reward_id (string) - ID of the campaign
     + language (string) - The preferred language to return, i.e. en, is, fi
 
-### Get single reward language [GET]
+### Get single reward [GET]
 
 NOTE: Todo. This method is not impemented yet.
 
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
 
 
@@ -579,22 +579,22 @@ NOTE: Todo. This method is not impemented yet.
                 }
               ]
             }
-            
-# Single reward language [/rewards/{reward_id}/language]
+
+## Reward language [/rewards/{reward_id}/language]
 
 + Parameters
     + reward_id (string) - ID of the campaign
 
-### Update single reward language [PATCH]
+### Update reward language [PATCH]
 
 + Request  (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
-    
+
     + Body
-    
+
             {
                 "description": {
                     "en": "You get a very nice CD in a box."
@@ -602,15 +602,15 @@ NOTE: Todo. This method is not impemented yet.
                 "title": {
                     "en": "A CD"
                 }
-        
-            }   
+
+            }
 
 + Response 200 (application/json)
 
 
 # Group Pledges
 
-## Campaign pledges [/campaigns/{campaign_id}/pledges/]  
+## Campaign pledges [/campaigns/{campaign_id}/pledges/]
 
 + Parameters
     + campaign_id (string) - ID of the campaign
@@ -625,9 +625,9 @@ The "pledge_meta" must include the fields email, first_name and last_name. The f
 + Request  (application/json)
 
     + Headers
-    
+
             Authorization: Bearer {JWToken}
-            
+
     + Body
 
             {
@@ -645,7 +645,7 @@ The "pledge_meta" must include the fields email, first_name and last_name. The f
             }
 
 + Response 200 (application/json)
-    
+
             {
               "pledge": {
                 "pledge_id":"52c0f3e9-883d-45c4-8409-69f09e01bea6"
@@ -653,18 +653,18 @@ The "pledge_meta" must include the fields email, first_name and last_name. The f
             }
 
 
-## Payment page [/pledges/{pledge_id}/payment_page/{payment_method}/]  
+## Payment page [/pledges/{pledge_id}/payment_page/{payment_method}/]
 
 The payment_method parameter is usually "credit_card" but some platforms may have other options like "paytrail" for Mesenaatti.
 
-The success_url, cancel_url and fail_url fields in the body should include urls that the user gets redirected to after performing the payment depending on 
+The success_url, cancel_url and fail_url fields in the body should include urls that the user gets redirected to after performing the payment depending on
 if the payment was successful, cancelled or failed. How this is handled may depend on payment methods.
 
 
 + Parameters
     + pledge_id (string) - ID of the pledge
     + payment_method (string)
-    
+
 ### Create a link to an externally hosted payment page [POST]
 
 + Request  (application/json)
@@ -673,25 +673,25 @@ if the payment was successful, cancelled or failed. How this is handled may depe
               "success_url": "http://www.example.com/success/",
               "cancel_url": "http://www.example.com/cancel/",
               "fail_url": "http://www.example.com/fail/"
-              
+
             }
 + Response 200 (application/json)
-    
+
             {
               "payment_page": {
                 "url":"https://www.lemonway.fr/paymentpage/?token=dkak238734l"
               }
             }
-            
 
-## Pre-Authorization [/pledges/{pledge_id}/preauthorization/]  
+
+## Pre-Authorization [/pledges/{pledge_id}/preauthorization/]
 
 Pre-Authorization a payment on a card using a payment token.
 
 
 + Parameters
     + pledge_id (string) - ID of the pledge
-    
+
 ### Create a payment  [POST]
 
 + Request  (application/json)
@@ -701,11 +701,11 @@ Pre-Authorization a payment on a card using a payment token.
 
             }
 + Response 200 (application/json)
-    
+
             {
               "status": "success"
             }
-            
+
 
 # Group Users
 
@@ -727,16 +727,16 @@ Use method to create a new user. Will return a valid auth token for that user af
             }
 
 + Response 200 (application/json)
-    
+
             {
               "token": {
                 "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
               }
             }
-            
+
 + Response 500 (application/json)
 
-        {   
+        {
             "status": "email_already_exists",
             "message":"Sorry, didn't work"
         }
@@ -744,10 +744,10 @@ Use method to create a new user. Will return a valid auth token for that user af
 ## Users tokens [/users/tokens/]
 
 ### Generate a token for authenticating a user [POST]
-Generates an authentication token for a user. 
+Generates an authentication token for a user.
 
 + Request  (application/json)
-    
+
     + Body
 
             {
@@ -756,14 +756,14 @@ Generates an authentication token for a user.
             }
 
 + Response 200 (application/json)
-    
+
             {
               "token": {
                 "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
               }
             }
-            
-+ Response 200 (application/json)
+
++ Response 500 (application/json)
 
         {
             "message":"Sorry, didn't work"
@@ -780,8 +780,12 @@ Get the user's profile
 
 + Request  (application/json)
 
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
 + Response 200 (application/json)
-    
+
             {
               "profile": {
                 "first_name":"John",
@@ -790,15 +794,19 @@ Get the user's profile
                 "long_description": "<h1>This is who I am</h1>"
               }
             }
-            
+
 ## My profile [/users/me/profile]
 
 ### Get my profile [GET]
 
 + Request  (application/json)
 
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
 + Response 200 (application/json)
-    
+
             {
               "profile": {
                 "first_name":"John",
@@ -812,6 +820,12 @@ Get the user's profile
 
 + Request  (application/json)
 
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
             {
               "first_name":"John",
               "last_name":"Smith",
@@ -822,7 +836,7 @@ Get the user's profile
 + Response 200 (application/json)
 
 + Response 401 (application/json)
-  
+
             {
               "status":"invalid_login"
             }
@@ -833,6 +847,12 @@ Get the user's profile
 
 + Request  (application/json)
 
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
             {
               "new_password":"hello123",
               "old_password": "iloveu"
@@ -841,14 +861,13 @@ Get the user's profile
 + Response 200 (application/json)
 
 + Response 401 (application/json)
-  
+
             {
               "status":"invalid_login"
             }
 
 
 # Group Subscriptions
-
 
 ## Subscription to campaign [/campaigns/{campaign_id}/subscriptions/]
 
@@ -868,11 +887,11 @@ Make a monthly contribution to this campaign. E-mail address is the address of t
                 "email":"arnar@karolinafund.com",
                 "first_name": "Arnar",
                 "last_name": "Sigurdsson"
-            
+
             }
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success",
               "subscription": {
@@ -898,11 +917,11 @@ Save a credit card to use when charging subscription. "card_token" is a token th
 
             {
                 "card_token": "xxxxxxx_yyyy"
-            
+
             }
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success"
             }
@@ -919,7 +938,7 @@ TODO: Profiles and campaigns (and more?) can have tags.
 - Remove tag.
 - Get tags (from campaign or profile)
 - Get all tags
-- Search tags (for autocomplete) 
+- Search tags (for autocomplete)
 
 
 ## Tags [/tags/]
@@ -928,13 +947,13 @@ TODO: Profiles and campaigns (and more?) can have tags.
 
 + Request  (application/json)
 
-    + Body 
+    + Body
 
             {
               "label": {
                 "en": "cars",
                 "es": "autos"
-              }                
+              }
             }
 
 + Response 200 (application/json)
@@ -948,7 +967,7 @@ TODO: Profiles and campaigns (and more?) can have tags.
 + Request  (application/json)
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success",
               "tags": [
@@ -989,11 +1008,11 @@ To search for a tag by it's label. Supply the full or partial label.
 
             {
                 "term": "ani"
-            
+
             }
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success",
               "tags": [
@@ -1014,7 +1033,7 @@ To search for a tag by it's label. Supply the full or partial label.
 + Request  (application/json)
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success",
               "tags": [
@@ -1047,7 +1066,7 @@ To search for a tag by it's label. Supply the full or partial label.
 
 + Request  (application/json)
 
-    + Body 
+    + Body
 
             {
               "id": "987"
@@ -1063,7 +1082,7 @@ To search for a tag by it's label. Supply the full or partial label.
 + Request  (application/json)
 
 + Response 200 (application/json)
-    
+
             {
               "status": "success",
               "tags": [
@@ -1096,7 +1115,7 @@ To search for a tag by it's label. Supply the full or partial label.
 
 + Request  (application/json)
 
-    + Body 
+    + Body
 
             {
               "id": "234"
