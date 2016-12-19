@@ -227,13 +227,13 @@ Update, completely or partially, campaign settings.
 + Response 200 (application/json)
 
 
-## Campaign custom language language [/campaigns/{campaign_id}/custom_language/{lang_code}]
+## Campaign custom language [/campaigns/{campaign_id}/custom_language/{lang_code}]
 
 + Parameters
     + campaign_id (string) - ID of the campaign
     + lang_code (string) - Language of the fields to update (i.e. en, is, es)
 
-### Update custom language language [PATCH]
+### Update custom language [PATCH]
 
 Add custom, arbitrary language fields. Field names can be alphanum with underscores. Fields must specify format (plaintext, html or json) of the content to be inserted.
 
@@ -251,7 +251,7 @@ Add custom, arbitrary language fields. Field names can be alphanum with undersco
                   "value": "<h1>The story of the life of the creator</h1>",
                   "format": "html"
                 },
-                "addittional_thoughts": {
+                "additional_thoughts": {
                   "value": "Here's what some people think of this project",
                   "format": "plaintext"
                 }
