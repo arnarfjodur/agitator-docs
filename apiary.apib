@@ -118,6 +118,10 @@ Returns a list of campaigns that are funding or have been funding. Includes only
             {
               "campaign": {
                 "campaign_id": "175",
+                "custom_language": {
+                  "creator_biography": "The creator of this project has worked for a long time in Acadmei",
+                  "addittional_thoughts": "Some custom language here"
+                }
                 "title": "Creative campaign",
                 "short_description": "This is a new campaign! It's about funding creativity together.",
                 "tagline": "Creative together",
@@ -189,6 +193,8 @@ Returns a list of campaigns that are funding or have been funding. Includes only
               ]
             }
 
+
+
 ## Campaign settings [/campaigns/{campaign_id}/settings/]
 
 + Parameters
@@ -216,6 +222,40 @@ Update, completely or partially, campaign settings.
               "creator_pic": "pictureofcreator.jpg",
               "contact_email": "arnar@karolinafund.com".
               "legal_creator": "Karolina Fund ehf"
+            }
+
++ Response 200 (application/json)
+
+
+## Campaign custom language language [/campaigns/{campaign_id}/custom_language/{lang_code}]
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+    + lang_code (string) - Language of the fields to update (i.e. en, is, es)
+
+### Update custom language language [PATCH]
+
+Add custom, arbitrary language fields. Field names can be alphanum with underscores. Fields must specify format (plaintext, html or json) of the content to be inserted.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "custom_language": {
+                "creator_biography": {
+                  "value": "<h1>The story of the life of the creator</h1>",
+                  "format": "html"
+                },
+                "addittional_thoughts": {
+                  "value": "Here's what some people think of this project",
+                  "format": "plaintext"
+                }
+              }
             }
 
 + Response 200 (application/json)
