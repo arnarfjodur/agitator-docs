@@ -28,21 +28,20 @@ Error responses should include the field "message" which should be a human reada
 
             Authorization: Bearer {JWToken}
 
-
 + Response 200 (application/json)
 
     + Body
 
             {
               "experiment": {
-                "experiment": "175",
+                "experiment_id": "175",
                 "custom_language": {
                   "author_biography": {
                    "value": "This author has a long history ...",
                    "format": "html",
                    "html": "This author has a long history ..."
                   }
-                }
+                },
                 "language": {
                   "short_description": {
                    "value": "This is a **nice** experiment",
@@ -67,7 +66,6 @@ Error responses should include the field "message" which should be a human reada
                 "admin"
               ]
             }
-
 
 
 # Group Campaigns
