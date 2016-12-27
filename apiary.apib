@@ -12,6 +12,64 @@ but may include "error" or some other status key depending on the context.
 
 Error responses should include the field "message" which should be a human readable error message.
 
+# Group Experiments
+
+## Single Experiments [/experiments/{experiment_id}/{lang_code}]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+    + lang_code (string) - The preferred language to return, i.e. en, is, fi
+
+### Get Experiment [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "experiment": {
+                "experiment": "175",
+                "custom_language": {
+                  "author_biography": {
+                   "value": "This author has a long history ...",
+                   "format": "html",
+                   "html": "This author has a long history ..."
+                  }
+                }
+                "language": {
+                  "short_description": {
+                   "value": "This is a **nice** experiment",
+                   "format": "markdown",
+                   "html": "This is a <b>nice</b> experiment"
+                  },
+                 "title": {
+                   "value": "My Experiment",
+                   "format": "plaintext",
+                   "html": "My Experiment"
+                  }
+                },
+                "images": {
+                  "main": {
+                   "url": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg"
+                  }
+                }
+              },
+              "acl": [
+                "view",
+                "edit",
+                "admin"
+              ]
+            }
+
+
+
 # Group Campaigns
 
 ## Campaigns [/campaigns/]
