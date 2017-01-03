@@ -179,7 +179,40 @@ Campaigns are crowdfunding projects.
 
 + Response 200 (application/json)
 
-                
+# Group Files
+
+## Image files [/files/images/]
+
+### Upload image file [POST]
+
+Supported types are jpg/jpeg, png, gif.
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="file"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
+            
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                    "campaign": {
+                        "campaign_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
+                    }
+                }
+
+
 # Group Campaigns
 
 ## Campaigns [/campaigns/]
