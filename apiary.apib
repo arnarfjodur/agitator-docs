@@ -14,7 +14,30 @@ Error responses should include the field "message" which should be a human reada
 
 # Group Experiments
 
-## Single Experiments [/experiments/{experiment_id}/{lang_code}]
+## Experiments [/experiments/]
+
+Campaigns are crowdfunding projects.
+
+### Create new campaign [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                    "experiment": {
+                        "experiment_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
+                    }
+                }
+
+
+## Single Experiment [/experiments/{experiment_id}/{lang_code}]
 
 + Parameters
     + experiment_id (string) - ID of the experiment
@@ -67,7 +90,96 @@ Error responses should include the field "message" which should be a human reada
               ]
             }
 
+## Experiment settings [/experiments/{experiment_id}/settings]
 
++ Parameters
+    + experiment_id (string) - ID of the experiment
+
+### Update settings [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+    
+                {
+                    "settings": {
+                        "stage": 4
+                    }
+                }
+
++ Response 200 (application/json)
+
+
+## Custom language [/experiments/{experiment_id}/custom_language/{lang_code}/]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+    + lang_code (string) - The language code of the lang to be updated
+
+
+### Update custom language [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+    
+    + Body
+
+            {
+              "custom_language": {
+                "creator_biography": {
+                  "value": "<h1>The story of the life of the creator</h1>",
+                  "format": "html"
+                },
+                "additional_thoughts": {
+                  "value": "Here's what some people think of this project",
+                  "format": "plaintext"
+                }
+              }
+            }
+
++ Response 200 (application/json)
+
+
+## Default language [/experiments/{experiment_id}/language/{lang_code}/]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+    + lang_code (string) - The language code of the lang to be updated
+
+
+### Update language [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "language": {
+                "title": {
+                  "value": "My great experiment"
+                },
+                "short_description": {
+                  "value": "Some more info on that experiment."
+                }
+              }
+            }
+
++ Response 200 (application/json)
+
+                
 # Group Campaigns
 
 ## Campaigns [/campaigns/]
