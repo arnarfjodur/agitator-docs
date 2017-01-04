@@ -16,9 +16,9 @@ Error responses should include the field "message" which should be a human reada
 
 ## Experiments [/experiments/]
 
-Campaigns are crowdfunding projects.
+Experiments are experimental.
 
-### Create new campaign [POST]
+### Create new experiment [POST]
 
 + Request (application/json)
 
@@ -185,7 +185,7 @@ Campaigns are crowdfunding projects.
 
 ### Upload image file [POST]
 
-Supported types are jpg/jpeg, png, gif.
+Supported types and extensions are jpg/jpeg, png, gif. This method will return a filename, which is used to update an image field.
 
 + Request (multipart/form-data; boundary=---BOUNDARY)
 
