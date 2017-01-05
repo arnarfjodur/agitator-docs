@@ -77,7 +77,7 @@ Experiments are experimental.
                    "html": "My Experiment"
                   }
                 },
-                "images": {
+                "image_collection": {
                   "main": {
                    "url": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg"
                   }
@@ -173,6 +173,36 @@ Experiments are experimental.
                 },
                 "short_description": {
                   "value": "Some more info on that experiment."
+                }
+              }
+            }
+
++ Response 200 (application/json)
+
+
+## Images collection [/experiments/{experiment_id}/image_collection/]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+
+
+### Update image collection [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+            {
+              "image_collection": {
+                "main": {
+                  "filename": "lkj-lkjsdflkj-lkjasf.jpg"
+                },
+                "author_photo": {
+                  "filename": "dflkj-lkjasf.png"
                 }
               }
             }
