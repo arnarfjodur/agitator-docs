@@ -81,6 +81,52 @@ Gett a preview of all the experiments on the platform.
                 }
             }
 
+## User's Experiments previews [/users/{user_id}/experiments/preview/{lang_code}]
+
++ Parameters
+    + lang_code (string) - The preferred language to return, i.e. en, is, fi
+    + user_id (string) - The user id, use "me" for current logged in user
+    
+### Get previews [GET]
+
+Gett a preview of all the experiments on the platform.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "previews": [
+                {
+                  "experiment_id": "1",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                },
+                {
+                  "experiment_id": "2",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                },
+                {
+                  "experiment_id": "3",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                }
+            }
+
+
 ## Single Experiment [/experiments/{experiment_id}/{lang_code}]
 
 + Parameters
