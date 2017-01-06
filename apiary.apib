@@ -37,6 +37,50 @@ Experiments are experimental.
                 }
 
 
+## Experiment Previews [/experiments/preview/{lang_code}]
+
++ Parameters
+    + lang_code (string) - The preferred language to return, i.e. en, is, fi
+
+### Get previews [GET]
+
+Gett a preview of all the experiments on the platform.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "previews": [
+                {
+                  "experiment_id": "1",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                },
+                {
+                  "experiment_id": "2",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                },
+                {
+                  "experiment_id": "3",
+                  "stage": 0,
+                  "title": "Untitled Experiment",
+                  "short_description": "An Experiment",
+                  "image": null
+                }
+            }
+
 ## Single Experiment [/experiments/{experiment_id}/{lang_code}]
 
 + Parameters
@@ -79,7 +123,9 @@ Experiments are experimental.
                 },
                 "image_collection": {
                   "main": {
-                   "url": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg"
+                   "url": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg",
+                   "url": 2a5dd4a049eb08c57f15369180e702cd.jpg"
+
                   }
                 }
               },
