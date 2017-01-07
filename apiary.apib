@@ -37,14 +37,17 @@ Experiments are experimental.
                 }
 
 
-## Experiment Previews [/experiments/preview/{lang_code}]
+## Experiment Previews [/experiments/preview/{lang_code}?team_member_id={team_member_id}&place={place}&stage={stage}]
 
 + Parameters
     + lang_code (string) - The preferred language to return, i.e. en, is, fi
+    + team_member_id (string) - Filter results by team member's user ID
+    + place (string) - Filter by place to show experiments
+    + stage (int) - Filter by the stage the experiment is on
 
 ### Get previews [GET]
 
-Gett a preview of all the experiments on the platform.
+Gett a preview of the experiments on the platform.
 
 + Request (application/json)
 
