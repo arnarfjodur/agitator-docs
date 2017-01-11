@@ -37,13 +37,15 @@ Experiments are experimental.
                 }
 
 
-## Experiment Previews [/experiments/preview/{lang_code}?team_member_id={team_member_id}&place={place}&stage={stage}]
+## Experiment Previews [/experiments/preview/{lang_code}?team_member_id={team_member_id}&place={place}&stage={stage}&limit={limit}&offset={offset}]
 
 + Parameters
     + lang_code (string) - The preferred language to return, i.e. en, is, fi
     + team_member_id (string) - Filter results by team member's user ID
     + place (string) - Filter by place to show experiments
     + stage (int) - Filter by the stage the experiment is on
+    + limit (int) - How many to return
+    + offset (int) - where to begin
 
 ### Get previews [GET]
 
@@ -176,7 +178,18 @@ Gett a preview of all the experiments on the platform.
                    "url": 2a5dd4a049eb08c57f15369180e702cd.jpg"
 
                   }
-                }
+                },
+                  "question_stages": {
+                      "1": {
+                        "47": {
+                          "question": {
+                            "html": "Hverslags litur er &aacute; &thorn;esu hj&oacute;li?",
+                            "value": "Hverslags litur er á þesu hjóli?",
+                            "format": "plaintext"
+                          }
+                        }
+                      }
+                    },
               },
               "acl": [
                 "view",
@@ -1178,7 +1191,13 @@ Get the user's profile
                 "first_name":"John",
                 "last_name":"Smith",
                 "short_description": "A professor of applied sciences",
-                "long_description": "<h1>This is who I am</h1>"
+                "long_description": "<h1>This is who I am</h1>",
+                "image_collection": {
+                  "profile": {
+                    "filename": "myprofielser.jpg",
+                    "url": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                  }
+                }                
               }
             }
 
@@ -1206,6 +1225,38 @@ Get the user's profile
             {
               "status":"invalid_login"
             }
+
+## My profile image [/users/me/profile/images_collection]
+
+
+### Update my profile image [PATCH]
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+
+
+            {
+              "images_collection": {
+                "profile" {
+                    "filename": "jongunnar.jpg"
+                }
+              }
+            }
+
+
++ Response 200 (application/json)
+
++ Response 401 (application/json)
+
+            {
+              "status":"invalid_login"
+            }
+
 
 ## My password [/users/me/password/]
 
