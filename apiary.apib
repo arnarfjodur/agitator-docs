@@ -1148,6 +1148,47 @@ Generates an authentication token for a user.
             "message":"Sorry, didn't work"
         }
 
+
+## Users Previews [/users/preview/?limt={limit}&offset={offset}]
+
++ Parameters
+    + limit (int) - How many to return
+    + offset (int) - where to begin
+
+### Get previews [GET]
+
+Gett all users on the platform.
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "previews": [
+                {
+                  "user_id": "1",
+                  "first_name": "John",
+                  "last_name": "Smith",
+                  "short_description": "A nice user",
+                  "image": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                },
+                  "user_id": "3",
+                  "first_name": "David",
+                  "last_name": "Mann",
+                  "short_description": "Yay",
+                  "image": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                },
+                  "user_id": "19",
+                  "first_name": "Arnar",
+                  "last_name": "Sigurdsson",
+                  "short_description": "I'm a nice person",
+                  "image": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                },
+
+            }
+
+
 ## Users profiles [/users/{user_id}/profile/]
 
 + Parameters
