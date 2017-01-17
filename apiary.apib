@@ -20,11 +20,20 @@ Experiments are experimental.
 
 ### Create new experiment [POST]
 
+Makes a new experiment. In the body, stage field determines what stage an experiment starts at.
+
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer {JWToken}
+
+    + Body
+
+            
+                {
+                    "stage": 2
+                }
 
 + Response 200 (application/json)
 
@@ -132,6 +141,62 @@ Gett a preview of all the experiments on the platform.
             }
 
 
+## All experiments tags [/experiments/tags/{lang_code}]
+
++ Parameters
+    + lang_code (string) - The preferred language to return, i.e. en, is, fi
+
+### Get tags available for experiments [GET]
+
++ Request  (application/json)
+
++ Response 200 (application/json)
+
+            {
+              "status": "success",
+              "tags": [
+                {
+                  "id": "123",
+                  "label": "animals"
+                },
+                {
+                  "id": "281",
+                  "label": "children"
+                },
+                {
+                  "id": "202",
+                  "label": "cars"
+                }
+
+              ]
+            }
+
+
+## Single Experiment tags  [/experiments/{experiment_id}]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+
+### Set tags for experiment [POST]
+
+This method replaces the experiment's current tags with the supplied ones. 
+Any previously set tags that are not sent along will be destroyed.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+    
+    + Body 
+    
+            {
+                "tags": ["231", "311", "313"]    
+            }
+
++ Response 200 (application/json)
+
+
 ## Single Experiment [/experiments/{experiment_id}/{lang_code}]
 
 + Parameters
@@ -190,7 +255,37 @@ Gett a preview of all the experiments on the platform.
                         }
                       }
                     },
+                "tags": [
+                  {
+                    "id": "21",
+                    "label": "Janita"
+                  },
+                  {
+                    "id": "13",
+                    "label": "Jarno"
+                  },
+                  {
+                    "id": "12",
+                    "label": "Heidi"
+                  },
+                  {
+                    "id": "33",
+                    "label": "Elmo"
+                  },
+                  {
+                    "id": "41",
+                    "label": "Patrik"
+                  }
+                ]
               },
+                "team": {
+                    "1": {
+                      "image": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/placetoexperiment/c6788256-8467-45d2-bf35-471b54b63527.jpg",
+                      "profile_id": 1,
+                      "first_name": "Admin",
+                      "last_name": "Dev Team"
+                    }
+                  },
               "acl": [
                 "view",
                 "edit",
