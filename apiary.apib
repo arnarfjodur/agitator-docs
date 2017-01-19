@@ -225,6 +225,27 @@ Any previously set tags that are not sent along will be destroyed.
                    "html": "This author has a long history ..."
                   }
                 },
+                "disabled": false,
+                "show_in": {
+                    "index": true
+                },
+                "funding": {
+                  "goal": 10000,
+                  "currency": "EUR",
+                  "sources": {
+                    "state": {
+                      "raised": 100
+                    },
+                    "organizations": {
+                      "raised": 200
+                    },
+                    "crowd": {
+                      "raised": 100,
+                      "api": "https://agitator-mesenaatti.karolina.io/agitator",
+                      "campaign_id": "351"
+                    } 
+                  }
+                },
                 "language": {
                   "short_description": {
                    "value": "This is a **nice** experiment",
@@ -300,6 +321,8 @@ Any previously set tags that are not sent along will be destroyed.
 
 ### Update settings [PATCH]
 
+If disabled is set, the experiment will be "deleted". The show_in specifies places where that experiment should be shown.
+
 + Request (application/json)
 
     + Headers
@@ -310,7 +333,11 @@ Any previously set tags that are not sent along will be destroyed.
     
                 {
                     "settings": {
-                        "stage": 4
+                        "stage": 4,
+                        "disabled": true,
+                        "show_in": {
+                          "index": true
+                       }
                     }
                 }
 
@@ -1306,10 +1333,25 @@ Get the user's profile
                 "first_name":"John",
                 "last_name":"Smith",
                 "short_description": "A professor of applied sciences",
-                "long_description": "<h1>This is who I am</h1>"
+                "long_description": "<h1>This is who I am</h1>",
+                "experiments": [
+                  {
+                    "experiment_id": "89",
+                    "stage": 0,
+                    "title": "My nice experiment",
+                    "short_description": "Yes yes",
+                    "owner_name": "",
+                    "image": "9d9bb861-c928-4750-8310-dc6261137d19.jpg"
+                  },
+                "image_collection": {
+                  "profile": {
+                    "filename": "myprofielser.jpg",
+                    "url": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                  }
+                }                
               }
             }
-
+            
 ## My profile [/users/me/profile]
 
 ### Get my profile [GET]
@@ -1328,6 +1370,15 @@ Get the user's profile
                 "last_name":"Smith",
                 "short_description": "A professor of applied sciences",
                 "long_description": "<h1>This is who I am</h1>",
+                "experiments": [
+                  {
+                    "experiment_id": "89",
+                    "stage": 0,
+                    "title": "My nice experiment",
+                    "short_description": "Yes yes",
+                    "owner_name": "",
+                    "image": "9d9bb861-c928-4750-8310-dc6261137d19.jpg"
+                  },
                 "image_collection": {
                   "profile": {
                     "filename": "myprofielser.jpg",
