@@ -172,7 +172,7 @@ Gett a preview of all the experiments on the platform.
             }
 
 
-## Single Experiment tags  [/experiments/{experiment_id}]
+## Single Experiment tags  [/experiments/{experiment_id}/tags/]
 
 + Parameters
     + experiment_id (string) - ID of the experiment
@@ -314,6 +314,44 @@ Any previously set tags that are not sent along will be destroyed.
               ]
             }
 
+
+## Experiment funding [/experiments/{experiment_id}/funding/]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+
+### Update Funding [PATCH]
+
+Set the funding options for experiment. Method PATCH means partial data can be submitted, and what is submitted is updated.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
+    + Body
+    
+                    {
+                        "goal": 22000,
+                        "currency": "EUR",
+                        "funding_sources": {
+                          "state": {
+                            "raised": 1230
+                            },
+                            "organizations": {
+                                "raised": 12
+                            },
+                            "crowd": {
+                                "api": "https://mesenaatti-agitator.karolina.io/agitator/",
+                                "campaign_id": 201
+                            }
+                        }
+                    }
+
++ Response 200 (application/json)
+
+
 ## Experiment settings [/experiments/{experiment_id}/settings/]
 
 + Parameters
@@ -334,6 +372,7 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
                 {
                     "settings": {
                         "stage": 4,
+                        "funding_currency": "EUR",
                         "disabled": true,
                         "show_in": {
                           "index": true
