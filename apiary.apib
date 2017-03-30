@@ -76,6 +76,7 @@ Get a preview of the experiments on the platform.
                   "experiment_id": "1",
                   "stage": 0,
                   "title": "Untitled Experiment",
+                  "like_count": 22,
                   "short_description": "An Experiment",
                   "image": null
                 },
@@ -83,6 +84,7 @@ Get a preview of the experiments on the platform.
                   "experiment_id": "2",
                   "stage": 0,
                   "title": "Untitled Experiment",
+                  "like_count": 2,
                   "short_description": "An Experiment",
                   "image": null
                 },
@@ -90,6 +92,7 @@ Get a preview of the experiments on the platform.
                   "experiment_id": "3",
                   "stage": 0,
                   "title": "Untitled Experiment",
+                  "like_count": 0,
                   "short_description": "An Experiment",
                   "image": null
                 }
@@ -307,6 +310,10 @@ Any previously set tags that are not sent along will be destroyed.
                       "last_name": "Dev Team"
                     }
                   },
+              "my_relationships": [
+                 "like"
+              ],
+              "like_count": 22,
               "acl": [
                 "view",
                 "edit",
@@ -348,6 +355,36 @@ Set the funding options for experiment. Method PATCH means partial data can be s
                             }
                         }
                     }
+
++ Response 200 (application/json)
+
+
+## Experiment like [/experiments/{experiment_id}/likes/]
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+
+### Add like [POST]
+
+Like an experiment
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+
++ Response 200 (application/json)
+
+### Remove like [DELETE]
+
+Unlike an experiment
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
 
 + Response 200 (application/json)
 
@@ -974,6 +1011,10 @@ Especially important is the key **name="file"**, which has to be exactly that an
 
 ### Get rewards for a campaign [GET]
 
+**Do not use this!** ([bug](https://github.com/arnarfjodur/Agitator/issues/49))
+
+Use *[Get campaign](#reference/campaigns/single-campaign/get-campaign)* instead.
+
 + Response 200 (application/json)
 
     + Body
@@ -1482,6 +1523,37 @@ Get the user's profile
             {
               "status":"invalid_login"
             }
+
+## Password reset emails [/users/password_resets/]
+
+### Send e-mail with password reset [POST]
+
++ Request  (application/json)
+
+    + Body
+                
+            {
+              "email":"example@example.com"
+            }
+                
++ Response 200 (application/json)
+
+
+## Password change with token from email [/users/password_changes/]
+
+### Send e-mail with password reset [POST]
+
++ Request  (application/json)
+
+    + Body
+                
+            {
+              "email":"example@example.com",
+              "password_reset_token": "lkasjdfkljskfjkls.lkjsdklflsdjf.lkskldfjljsdf",
+              "new_password": "password123iloveyou"
+            }
+                
++ Response 200 (application/json)
 
 
 ## My password [/users/me/password/]
