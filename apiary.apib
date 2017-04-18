@@ -1618,13 +1618,12 @@ Make a monthly contribution to this campaign. E-mail address is the address of t
             }
 ## Subscription Card [/subscriptions/{subscription_id}/card/]
 
-### Update subscription's credit card [PUT]
-
 Save a credit card to use when charging subscription. "card_token" is a token that has been optained from a payment gateway to replace the actual card number (functionality outside of this API). This method works only when using payment gateways that support such tokens, i.e. Borgun RPG.
 
 + Parameters
     + subscription_id (string) - ID of the subscription (UUID)
 
+### Update subscription's credit card [PUT]
 
 + Request  (application/json)
 
