@@ -852,11 +852,14 @@ Any aribtrary key:value to be stored on the campaign.
 
 + Response 200 (application/json)
 
-## My campaigns [/campaigns/my_campaigns/preview]
+## My campaigns [/campaigns/mycampaigns/preview/{langCode}]
 
-Returns all the campaigns that the current authenticated user owns.
++ Parameters
+    + langCode (string) - The language to return in
 
 ### Get my campaigns [GET]
+
+Returns all the campaigns that the current authenticated user owns.
 
 + Request (application/json)
 
