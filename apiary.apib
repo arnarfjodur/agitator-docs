@@ -232,6 +232,7 @@ Any previously set tags that are not sent along will be destroyed.
                 "show_in": {
                     "index": true
                 },
+                "geographic_location": "Miami",
                 "funding": {
                   "goal": 10000,
                   "currency": "EUR",
@@ -413,7 +414,8 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
                         "disabled": true,
                         "show_in": {
                           "index": true
-                       }
+                       },
+                       "geographic_location": "Miami"
                     }
                 }
 
@@ -511,6 +513,37 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
                   "filename": "dflkj-lkjasf.png"
                 }
               }
+            }
+
++ Response 200 (application/json)
+
+## Experiment links  [/experiments/{experiment_id}/links/]
+
+### Set links for experiment [POST]
+
+This method replaces the experiment's current links with the supplied ones. 
+Any previously set links that are not sent along will be destroyed.
+The protocol (http://) part of the url is not obligatory.
+In case the protocol is not provided, it will be added automatically on the server-side.
+
++ Parameters
+    + experiment_id (string) - ID of the experiment
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+    
+    + Body 
+    
+            {
+                "links": [
+                    {
+                        "url": "http://www.mysite.com/mypage",
+                        "title": "My awesome page"
+                    }
+                ]    
             }
 
 + Response 200 (application/json)
@@ -1453,6 +1486,17 @@ Get the user's profile
                 "last_name":"Smith",
                 "short_description": "A professor of applied sciences",
                 "long_description": "<h1>This is who I am</h1>",
+                "tags": [
+                  {
+                    "id": "331",
+                    "label": "designer"
+                  }],
+                "links":[
+                  {
+                    "url":"http://mysite.com/mypage",
+                    "title":"My website",
+                    "site":"mysite.com"
+                  }],
                 "experiments": [
                   {
                     "experiment_id": "89",
@@ -1461,7 +1505,7 @@ Get the user's profile
                     "short_description": "Yes yes",
                     "owner_name": "",
                     "image": "9d9bb861-c928-4750-8310-dc6261137d19.jpg"
-                  },
+                  }],
                 "image_collection": {
                   "profile": {
                     "filename": "myprofielser.jpg",
@@ -1583,6 +1627,57 @@ Get the user's profile
             {
               "status":"invalid_login"
             }
+            
+            
+## User tags  [/users/me/tags/]
+
+### Set tags for user [POST]
+
+This method replaces the user's current tags with the supplied ones. 
+Any previously set tags that are not sent along will be destroyed.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+    
+    + Body 
+    
+            {
+                "tags": ["231", "311", "313"]    
+            }
+
++ Response 200 (application/json)
+
+
+## User links  [/users/me/links/]
+
+### Set links for user [POST]
+
+This method replaces the user's current links with the supplied ones. 
+Any previously set links that are not sent along will be destroyed.
+The protocol (http://) part of the url is not obligatory.
+In case the protocol is not provided, it will be added automatically on the server-side.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer {JWToken}
+    
+    + Body 
+    
+            {
+                "links": [
+                    {
+                        "url": "http://www.mysite.com/mypage",
+                        "title": "My awesome page"
+                    }
+                ]    
+            }
+
++ Response 200 (application/json)
 
 
 # Group Subscriptions
