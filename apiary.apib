@@ -158,6 +158,9 @@ Possible errors:
 ## Status error invalid email (object)
 + status: invalid_email (string)
 
+## Status error invalid arguments (object)
++ status: invalid_arguments (string)
+
 ## Error message action failed (object)
 + message: Action failed (string)
 
@@ -172,6 +175,12 @@ Possible errors:
 
 ## Error message invalid email (object)
 + message: `E-mail address is not valid` (string)
+
+## Error message short first name (object)
++ message: First name must be at least 2 characters (string)
+
+## Error message short last name (object)
++ message: Last name must be at least 2 characters (string)
 
 ## Error message email exists (object)
 + message: `A user with this e-mail address already exists` (string)
@@ -327,6 +336,14 @@ Possible errors:
 ## Register user invalid email Response (object)
 + Include Status error invalid email
 + Include Error message invalid email
+
+## Register user short first Response (object)
++ Include Status error invalid arguments
++ Include Error message short first name
+
+## Register user short last Response (object)
++ Include Status error invalid arguments
++ Include Error message short last name
 
 ## Users tokens Request (object)
 + Include User email base
