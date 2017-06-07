@@ -20,6 +20,8 @@ Campaigns are crowdfunding projects.
 
 ## Single campaign [/campaigns/{campaign_id}/{language}]
 
+The **Authorization** header is optional, but you need to provide it in order to gain editing capabilities.
+
 + Parameters
     + campaign_id (string) - ID of the campaign
     + language (string) - The preferred language to return, e.g. en, is, fi
@@ -35,35 +37,302 @@ Campaigns are crowdfunding projects.
 + Response 200 (application/json)
     + Attributes (Campaign Response)
 
++ Response 500 (application/json)
+    + Attributes (Error Response)
+
+## Campaign backers [/campaigns/{campaign_id}/backers]
+
++ Parameters
+    + campaign_id (string) - ID of the campaign
+
+### Get campaign backers [GET]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (Campaign backers Response)
+
++ Response 500 (application/json)
+    + Attributes (Error Response)
+
+# Group Users
+
+## Users [/users/]
+
+New users can be created. Users can take actions, such as pledging, creating and editing of campaigns and experiments, etc.
+
+### Register a new user [POST]
+
+Creates a new user. Returns an authentication token for that user.
+
+Possible errors:
+* Email already in use
+* Email invalid
+
++ Request (application/json)
+    + Attributes (Register user Request)
+
++ Response 200 (application/json)
+    + Attributes (Users tokens Response)
+
++ Request (application/json)
+    + Attributes (Register user Request)
+
++ Response 500 (application/json)
+    + Attributes (Register user email exists Response)
+
++ Request (application/json)
+    + Attributes
+      + Include Register user Request
+      + email: example_email.com
+
++ Response 500 (application/json)
+    + Attributes (Register user invalid email Response)
+
+### Generate a token for a user [POST /users/tokens/]
+Generates an authentication token for a user.
+
+Possible errors:
+* User does not exist in the system
+* Wrong password
+* Missing password
+* Not a valid email
+
++ Request (application/json)
+    + Attributes (Users tokens Request)
+
++ Response 200 (application/json)
+    + Attributes (Users tokens Response)
+
++ Request (application/json)
+    + Attributes (Users tokens Request)
+
++ Response 401 (application/json)
+    + Attributes (Users tokens wrong credentials no user Response)
+
++ Request (application/json)
+    + Attributes (Users tokens Request)
+
++ Response 401 (application/json)
+    + Attributes (Users tokens wrong credentials incorrect Response)
+
++ Request (application/json)
+    + Attributes
+      + Include Users tokens Request
+      + email: example_email.com
+
++ Response 401 (application/json)
+    + Attributes (Users tokens error email invalid Response)
+
++ Request (application/json)
+    + Attributes (User email base)
+
++ Response 400 (application/json)
+    + Attributes (Users tokens error no password Response)
+
 # Data Structures
 
-## JWToken (string)
-
-lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj
-
 ## Acl (array)
-A list of access control list levels.
-## Sample
-+ view
-+ edit
-+ admin
++ view (string)
++ edit (string)
++ admin (string)
 
-## Reward (object)
+## Status success (object)
++ status: success (string)
+
+## Success message action successful (object)
++ message: Action successful (string)
+
+## Status error (object)
++ status: error (string)
+
+## Status error email exists (object)
++ status: email_already_exists (string)
+
+## Status error missing credentials (object)
++ status: missing_credentials (string)
+
+## Status error wrong credentials (object)
++ status: wrong_credentials (string)
+
+## Status error invalid email (object)
++ status: invalid_email (string)
+
+## Error message action failed (object)
++ message: Action failed (string)
+
+## Error message didnt work (object)
++ message: Sorry, didn't work (string)
+
+## Error message password provided (object)
++ message: Password must be provided (string)
+
+## Error message email invalid (object)
++ message: `Not a valid e-mail` (string)
+
+## Error message invalid email (object)
++ message: `E-mail address is not valid` (string)
+
+## Error message email exists (object)
++ message: `A user with this e-mail address already exists` (string)
+
+## Error message credentials no user (object)
++ message: User does not exist (string)
+
+## Error message credentials incorrect (object)
++ message: `Password or e-mail incorrect, or user does not exist` (string)
+
+## Campaign base (object)
++ campaign_id: 1 (string)
++ title: My Campaign (string)
++ short_description (string, nullable)
++ tagline (string, nullable)
++ json_description (string, nullable)
++ html_description (string)
++ target_goal: 0 (number)
++ min_goal: 0 (number)
++ video_url (string, nullable)
++ meta (string, nullable)
++ video_embed_code (string, nullable)
++ stage: 0 (number)
++ funding_reached: 0 (number)
++ funding_deadline: 0 (number)
++ last_day_of_funding: `1969-12-31` (string)
++ first_day_of_funding: `1970-01-01` (string)
++ funding_start: 0 (number)
++ number_of_backers: 0 (number)
++ project_pic (string)
++ creator_pic (string)
++ subscriptions_amount_total: 120 (number)
++ subscriptions_subscribers_count: 4 (number)
++ subscriptions_goals (Subscription goals, optional)
++ rewards (Rewards, optional)
+
+## Subscription goal base
++ goal_id: 123 (string)
++ target: 100 (number)
++ title: My goal (string)
++ description: My description of this goal (string)
+
+## Reward base (object)
 + reward_id: 123 (string)
 + stock_reserved: 0 (number)
 + vat_percentage (string, nullable)
 + stock: 0 (number, nullable)
 + amount: 1 (number)
-+ title: Low reward (string)
-+ description: This is a low reward (string)
++ title: reward (string)
++ description: This is a reward (string)
 + image (string, nullable)
 
-## Rewards (array)
-+ (Reward)
+## User preview base (object)
++ user_id: 123 (string)
++ first_name: John (string)
++ last_name: Smith (string)
++ short_description: Some user (string)
++ image (string, optional)
 
-## Campaign (object)
-+ rewards (Rewards)
+## User email base (object)
++ email: example@example.com (string)
+
+## Rewards (array) - An array of different rewards based on the Reward base object
++ (Reward base)
++ (Reward base)
+  + reward_id: 234
+  + amount: 5
++ (Reward base)
+  + reward_id: 345
+  + amount: 10
+  + stock: 5
++ (Reward base)
+  + reward_id: 456
+  + amount: 15
+  + stock_reserved: 3
+  + stock: 3
++ (Reward base)
+  + reward_id: 567
+  + amount: 50
+
+## Subscription goals (array) - An array of different subscription goals based on the Subscription goal base object
++ (Subscription goal base)
++ (Subscription goal base)
+  + goal_id: 234
+  + target: 200
++ (Subscription goal base)
+  + goal_id: 345
+  + target: 300
++ (Subscription goal base)
+  + goal_id: 456
+  + target: 400
+
+## User previews (array) - An array of different user previews based on the User preview base object
++ (User preview base)
++ (User preview base)
+  + user_id: 234
+  + first_name: Jack
++ (User preview base)
+  + user_id: 345
+  + first_name: Jill
++ (User preview base)
+  + user_id: 456
+  + last_name: Stone
++ (User preview base)
+  + user_id: 567
+  + last_name: McLane
 
 ## Campaign Response (object)
-+ campaign (Campaign)
++ campaign (Campaign base)
+  + min_goal: 5000
 + acl (Acl)
++ Include Status success
++ Include Success message action successful
+
+## Campaign backers Response (object)
++ previews (User previews)
++ Include Status success
++ Include Success message action successful
+
+## Users tokens Response (object)
++ token (object)
+  + string: lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj (string)
++ Include Status success
+
+## Error Response (object)
++ Include Status error
++ Include Error message action failed
+
+## Users tokens error Response (object)
++ Include Status error
++ Include Error message didnt work
+
+## Users tokens wrong credentials no user Response (object)
++ Include Status error wrong credentials
++ Include Error message credentials no user
+
+## Users tokens wrong credentials incorrect Response (object)
++ Include Status error wrong credentials
++ Include Error message credentials incorrect
+
+## Users tokens error no password Response (object)
++ Include Status error missing credentials
++ Include Error message password provided
+
+## Users tokens error email invalid Response (object)
++ Include Status error missing credentials
++ Include Error message email invalid
+
+## Register user email exists Response (object)
++ Include Status error
++ Include Error message email exists
+
+## Register user invalid email Response (object)
++ Include Status error invalid email
++ Include Error message invalid email
+
+## Users tokens Request (object)
++ Include User email base
++ password: password123 (string)
+
+## Register user Request (object)
++ Include Users tokens Request
++ first_name: John (string)
++ last_name: Smith (string)
