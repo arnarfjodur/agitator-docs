@@ -1,16 +1,3 @@
-FORMAT: 1A
-HOST: https://sandbox.karolina.io/agitator
-
-# Agitator
-
-A campaign API for crowdfunding and crowdsourcing.
-
-**On error handling:** All responses with code 200 should be considered successful but 5xx or 4xx not.
-
-Responses should include the key "status" in the JSON which should be "success" for 200 responses,
-but may include "error" or some other status key depending on the context.
-
-Error responses should include the field "message" which should be a human readable error message.
 
 # Group Experiments
 
@@ -586,28 +573,6 @@ Supported types and extensions are jpg/jpeg, png, gif. This method will return a
 
 # Group Campaigns
 
-## Campaigns [/campaigns/]
-
-Campaigns are crowdfunding projects.
-
-### Create new campaign [POST]
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-+ Response 200 (application/json)
-
-    + Body
-
-                {
-                    "campaign": {
-                        "campaign_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
-                    }
-                }
-
 
 ## Campaigns preview [/campaigns/preview/{language}/]
 
@@ -674,96 +639,7 @@ Returns a list of campaigns that are funding or have been funding. Includes only
     + campaign_id (string) - ID of the campaign
     + language (string) - The preferred language to return, i.e. en, is, fi
 
-### Get campaign [GET]
 
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-
-+ Response 200 (application/json)
-
-    + Body
-
-    {
-      "campaign": {
-        "campaign_id": "175",
-        "custom_language": {
-          "creator_biography": "The creator of this project has worked for a long time in Acadmei",
-          "addittional_thoughts": "Some custom language here"
-        }
-        "title": "Creative campaign",
-        "short_description": "This is a new campaign! It's about funding creativity together.",
-        "tagline": "Creative together",
-        "json_description": "{\"data\":[{\"type\":\"text\",\"data\":{\"text\":\"<p>Here's some info.</p>\",\"format\":\"html\"}}]}",
-        "html_description": "<p class='profile_content_text'><p>Here's some info.</p></p>",
-        "target_goal": "20000",
-        "min_goal": 1000,
-        "video_url": null,
-        "meta": {
-          "external_link_1": "https://www.karolinafund.com/"
-        },
-        "video_embed_code": null,
-        "stage": 2,
-        "funding_reached": 6,
-        "funding_deadline": 1535749200,
-        "last_day_of_funding": "2018-08-30",
-        "first_day_of_funding": "2016-07-30",
-        "funding_start": 1469912400,
-        "number_of_backers": 1,
-        "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/2a5dd4a049eb08c57f15369180e702cd.jpg",
-        "creator_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png",
-        "rewards": [
-          {
-            "reward_id": 139,
-            "stock_reserved": 1,
-            "vat_percentage": "10.0000",
-            "stock": 12,
-            "amount": 1,
-            "title": "A Book",
-            "description": "",
-            "image": null
-          },
-          {
-            "reward_id": 140,
-            "stock_reserved": 0,
-            "vat_percentage": null,
-            "stock": null,
-            "amount": 1,
-            "title": null,
-            "description": "",
-            "image": null
-          },
-          {
-            "reward_id": 133,
-            "stock_reserved": 4,
-            "vat_percentage": "0.0000",
-            "stock": null,
-            "amount": 100,
-            "title": "This is the reward that you will get!",
-            "description": "Here is some info for you, yes sir!",
-            "image": null
-          },
-          {
-            "reward_id": 141,
-            "stock_reserved": 0,
-            "vat_percentage": "10.0000",
-            "stock": null,
-            "amount": 10000,
-            "title": "Very big reward, indeed",
-            "description": "",
-            "image": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/175/medium/a88a56eb1417cef1c13b58bb83a28fea.jpg"
-          }
-        ]
-      },
-      "acl": [
-        "view",
-        "edit",
-        "admin"
-      ]
-    }
 
 ## Campaign settings [/campaigns/{campaign_id}/settings/]
 
@@ -1328,63 +1204,9 @@ Pre-Authorization a payment on a card using a payment token.
 
 ## Users [/users/]
 
-### Register a new user [POST]
 
-Use method to create a new user. Will return a valid auth token for that user after registering.
 
-+ Request (application/json)
 
-    + Body
-
-            {
-              "email": "example@example.com",
-              "password": "password123",
-              "first_name": "Arnar",
-              "last_name": "Sigurdsson"
-            }
-
-+ Response 200 (application/json)
-
-            {
-              "token": {
-                "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
-              }
-            }
-
-+ Response 500 (application/json)
-
-        {
-            "status": "email_already_exists",
-            "message":"Sorry, didn't work"
-        }
-
-## Users tokens [/users/tokens/]
-
-### Generate a token for authenticating a user [POST]
-Generates an authentication token for a user.
-
-+ Request  (application/json)
-
-    + Body
-
-            {
-              "email": "example@example.com",
-              "password": "password123"
-            }
-
-+ Response 200 (application/json)
-
-            {
-              "token": {
-                "string":"lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj"
-              }
-            }
-
-+ Response 500 (application/json)
-
-        {
-            "message":"Sorry, didn't work"
-        }
 
 
 ## Users Previews [/users/preview/?limt={limit}&offset={offset}]
@@ -1939,26 +1761,3 @@ To search for a tag by it's label. Supply the full or partial label.
 # Group Questions
 
 TODO:: There are
-
-# Data Structures
-
-## Acl (array)
-+ 'view'
-+ 'edit'
-+ 'admin'
-
-## Reward (object)
-+ reward_id: 123 (string)
-+ stock_reserved: 0 (number)
-+ vat_percentage: (string)
-+ stock: 0 (number)
-+ amount: 1 (number)
-+ title: Low reward (string)
-+ description: This is a low reward (string)
-+ image (url)
-
-## Rewards (array)
-+ (Reward)
-
-## Campaign (object)
-+ rewards (Rewards)

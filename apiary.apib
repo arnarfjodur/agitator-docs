@@ -5,6 +5,8 @@ HOST: https://sandbox.karolina.io/agitator
 
 An API for crowdfunding and crowdsourcing.
 
+The API allows you to create a frontend and use the provided backend to power your crowdfunding website. The API documentation is organized by endpoints (e.g. /users/, /campaigns/). You are provided with examples and additional information where necessary.
+
 **Error handling:** All responses with code 200 should be considered successful but 5xx or 4xx not.
 
 **Response status:** Responses should include the key *status* in the JSON which should be *success* for 200 responses,
@@ -14,54 +16,115 @@ Error responses should include the field *message* which should be a human reada
 
 # Group Campaigns
 
+Campaigns are the basic element of crowdfunding. In reward-based crowdfunding, campaigns are often referred to as *projects*. Each Createed user may create and edit a campaign. Admin user may add other users to the **team**, which allows them to edit a campaign.
+
+A campaign may pass through several stages:
+* Private
+* Preparing
+* Raising funds
+* Executing
+* Finished
+* Canceled
+
+Depending on the stage, a campaign has different levels of visibility. Admin user can always see a campaign, but a guest user can only see it if it is not **Private**. The stage also defines the permitted actions that a normal user can make. E.g. campaign creator can edit the campaign until it moves to **raising funds**. After that, only an admin user may edit campaign settings.
+
+Each campaign also has admin-level settings, that only an admin user can change. Some of those are: *funding deadline*, *campaign stage*, *associated payment wallet*, etc.
+
+Campaign content (title, description, etc.) is saved separately for each available language. In absence of language specific text, the default fallback language text is returned (usually English).
+
 ## Campaigns [/campaigns/]
 
-Campaigns are crowdfunding projects.
+### Create new campaign [POST]
 
-## Single campaign [/campaigns/{campaign_id}/{language}]
+This endpoint allows you to create a new campaign. You need to include an **Authorization** header of the user that is the creator of this campaign. The response contains the id of the created campaign.
 
-The **Authorization** header is optional, but you need to provide it in order to gain editing capabilities.
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-    + language (string) - The preferred language to return, e.g. en, is, fi
-
-### Get campaign [GET]
+Possible errors:
+* Authorization header is not provided
+* Authorization header is invalid
 
 + Request (application/json)
-
     + Headers
 
             Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
-    + Attributes (Campaign Response)
+    + Attributes (Create campaign Response)
+
++ Request missing authorization (application/json)
 
 + Response 500 (application/json)
-    + Attributes (Error Response)
+    + Attributes (Authentication error 2 Response)
+
++ Request invalid authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+## Single campaign [/campaigns/{campaign_id}/{language}]
+
+The **Authorization** header is optional, but you need to provide it in order to gain editing capabilities or to view a private campaign.
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign.
+    + language: en (string) - The preferred language to return, e.g. en, is, fi.
+
+### Get campaign [GET]
+
+Returns a single campaign. You need to specify the id of the campaign and the language that you wish to get the information in. Depending on the stage of the campaign, you may need to include an **Authorization** header in order to see the campaign.
+
+For example, you can use the information to display an single campaign page where your visitors can see all the information regarding a campaign.
+
+Possible errors:
+* Campaign is private
+* Campaign does not exist
+
++ Request (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 200 (application/json)
+    + Attributes (Campaign Response)
+
++ Request private campaign (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
 
 ## Campaign backers [/campaigns/{campaign_id}/backers]
 
 + Parameters
-    + campaign_id (string) - ID of the campaign
+    + campaign_id: 1 (string) - ID of the campaign.
 
 ### Get campaign backers [GET]
+
+Returns an array of users that have backed a campaign. You need to specify the id of the campaign.
 
 + Request (application/json)
 
 + Response 200 (application/json)
     + Attributes (Campaign backers Response)
 
-+ Response 500 (application/json)
-    + Attributes (Error Response)
-
 # Group Users
 
 ## Users [/users/]
 
-New users can be created. Users can take actions, such as pledging, creating and editing of campaigns and experiments, etc.
+The visitors of your website are considered guests until they authenticate (log in). Once authenticated, they become users. Users can create **campaigns**, make **pledges** and edit **campaigns** of which they are a part of (as a team member). There are some actions that can only be executed by an **administrator**. An administrator is a type of a user that has higher privileges that other users and has access to some settings that are hidden to normal users.
 
-### Register a new user [POST]
+### Create a new user [POST]
 
 Creates a new user. Returns an authentication token for that user.
 
@@ -70,27 +133,32 @@ Possible errors:
 * Email invalid
 
 + Request (application/json)
-    + Attributes (Register user Request)
+    + Attributes (Create user Request)
 
 + Response 200 (application/json)
     + Attributes (Users tokens Response)
 
-+ Request (application/json)
-    + Attributes (Register user Request)
++ Request email already in use (application/json)
+    + Attributes (Create user Request)
 
 + Response 500 (application/json)
-    + Attributes (Register user email exists Response)
+    + Attributes (Create user email exists Response)
 
-+ Request (application/json)
++ Request wrong email format (application/json)
     + Attributes
-      + Include Register user Request
+      + Include Create user Request
       + email: example_email.com
 
 + Response 500 (application/json)
-    + Attributes (Register user invalid email Response)
+    + Attributes (Create user invalid email Response)
 
-### Generate a token for a user [POST /users/tokens/]
-Generates an authentication token for a user.
+## Users tokens [/users/tokens/]
+
+### Generate a token for a user [POST]
+
+Generates an authentication token for a user. You can use that token in subsequent requests to authorize by placing the token in the **Authorization** header, like so:
+
+`Authorization:Bearer <JWToken>`
 
 Possible errors:
 * User does not exist in the system
@@ -104,27 +172,29 @@ Possible errors:
 + Response 200 (application/json)
     + Attributes (Users tokens Response)
 
-+ Request (application/json)
++ Request non-existing user (application/json)
     + Attributes (Users tokens Request)
+      + email: example@email.comm
 
 + Response 401 (application/json)
     + Attributes (Users tokens wrong credentials no user Response)
 
-+ Request (application/json)
++ Request wrong password (application/json)
     + Attributes (Users tokens Request)
+      + password: password1234
 
 + Response 401 (application/json)
     + Attributes (Users tokens wrong credentials incorrect Response)
 
-+ Request (application/json)
++ Request wrong email format (application/json)
     + Attributes
       + Include Users tokens Request
       + email: example_email.com
 
-+ Response 401 (application/json)
++ Response 400 (application/json)
     + Attributes (Users tokens error email invalid Response)
 
-+ Request (application/json)
++ Request no password provided (application/json)
     + Attributes (User email base)
 
 + Response 400 (application/json)
@@ -132,66 +202,75 @@ Possible errors:
 
 # Data Structures
 
-## Acl (array)
+## Status success (object, fixed)
++ status: success (string)
+
+## Status error (object, fixed)
++ status: error (string)
+
+## Status error email exists (object, fixed)
++ status: email_already_exists (string)
+
+## Status error missing credentials (object, fixed)
++ status: missing_credentials (string)
+
+## Status error wrong credentials (object, fixed)
++ status: wrong_credentials (string)
+
+## Status error invalid email (object, fixed)
++ status: invalid_email (string)
+
+## Status error invalid arguments (object, fixed)
++ status: invalid_arguments (string)
+
+## Error message didnt work (object, fixed)
++ message: Sorry, didn't work (string)
+
+## Error message password provided (object, fixed)
++ message: Password must be provided. (string)
+
+## Error message email invalid (object, fixed)
++ message: `Not a valid e-mail` (string)
+
+## Error message invalid email (object, fixed)
++ message: `E-mail address is not valid.` (string)
+
+## Error message short first name (object, fixed)
++ message: First name must be at least 2 characters (string)
+
+## Error message short last name (object, fixed)
++ message: Last name must be at least 2 characters (string)
+
+## Error message email exists (object, fixed)
++ message: `A user with this e-mail address already exists.` (string)
+
+## Error message credentials no user (object, fixed)
++ message: User does not exist. (string)
+
+## Error message credentials incorrect (object, fixed)
++ message: `Password or e-mail incorrect, or user does not exist.` (string)
+
+## Error message cant get user (object, fixed)
++ message: `Cant get user` (string)
+
+## Error message could not find (object, fixed)
++ message: `Could not find user` (string)
+
+## Error message problems (object, fixed)
++ message: `Problems with platform authentication: Wrong signature - Please contact administrator.` (string)
+
+## Exception type Karolina exception (object, fixed)
++ exception_type: `Karolina\\Exception` (string)
+
+## Success message action successful (object, fixed)
++ message: `Action successful` (string)
+
+## Acl (array, fixed-type)
 + view (string)
 + edit (string)
 + admin (string)
 
-## Status success (object)
-+ status: success (string)
-
-## Success message action successful (object)
-+ message: Action successful (string)
-
-## Status error (object)
-+ status: error (string)
-
-## Status error email exists (object)
-+ status: email_already_exists (string)
-
-## Status error missing credentials (object)
-+ status: missing_credentials (string)
-
-## Status error wrong credentials (object)
-+ status: wrong_credentials (string)
-
-## Status error invalid email (object)
-+ status: invalid_email (string)
-
-## Status error invalid arguments (object)
-+ status: invalid_arguments (string)
-
-## Error message action failed (object)
-+ message: Action failed (string)
-
-## Error message didnt work (object)
-+ message: Sorry, didn't work (string)
-
-## Error message password provided (object)
-+ message: Password must be provided (string)
-
-## Error message email invalid (object)
-+ message: `Not a valid e-mail` (string)
-
-## Error message invalid email (object)
-+ message: `E-mail address is not valid` (string)
-
-## Error message short first name (object)
-+ message: First name must be at least 2 characters (string)
-
-## Error message short last name (object)
-+ message: Last name must be at least 2 characters (string)
-
-## Error message email exists (object)
-+ message: `A user with this e-mail address already exists` (string)
-
-## Error message credentials no user (object)
-+ message: User does not exist (string)
-
-## Error message credentials incorrect (object)
-+ message: `Password or e-mail incorrect, or user does not exist` (string)
-
-## Campaign base (object)
+## Campaign base (object, fixed-type)
 + campaign_id: 1 (string)
 + title: My Campaign (string)
 + short_description (string, nullable)
@@ -217,13 +296,13 @@ Possible errors:
 + subscriptions_goals (Subscription goals, optional)
 + rewards (Rewards, optional)
 
-## Subscription goal base
+## Subscription goal base (object, fixed-type)
 + goal_id: 123 (string)
 + target: 100 (number)
 + title: My goal (string)
 + description: My description of this goal (string)
 
-## Reward base (object)
+## Reward base (object, fixed-type)
 + reward_id: 123 (string)
 + stock_reserved: 0 (number)
 + vat_percentage (string, nullable)
@@ -233,115 +312,133 @@ Possible errors:
 + description: This is a reward (string)
 + image (string, nullable)
 
-## User preview base (object)
+## User preview base (object, fixed-type)
 + user_id: 123 (string)
 + first_name: John (string)
 + last_name: Smith (string)
 + short_description: Some user (string)
 + image (string, optional)
 
-## User email base (object)
+## User email base (object, fixed-type)
 + email: example@example.com (string)
 
 ## Rewards (array) - An array of different rewards based on the Reward base object
 + (Reward base)
 + (Reward base)
-  + reward_id: 234
-  + amount: 5
+  + reward_id: 234 (string)
+  + amount: 5 (number)
 + (Reward base)
-  + reward_id: 345
-  + amount: 10
-  + stock: 5
+  + reward_id: 345 (string)
+  + amount: 10 (number)
+  + stock: 5 (number, nullable)
 + (Reward base)
-  + reward_id: 456
-  + amount: 15
-  + stock_reserved: 3
-  + stock: 3
+  + reward_id: 456 (string)
+  + amount: 15 (number)
+  + stock_reserved: 3 (number)
+  + stock: 3 (number, nullable)
 + (Reward base)
-  + reward_id: 567
-  + amount: 50
+  + reward_id: 567 (string)
+  + amount: 50 (number)
 
 ## Subscription goals (array) - An array of different subscription goals based on the Subscription goal base object
 + (Subscription goal base)
 + (Subscription goal base)
-  + goal_id: 234
-  + target: 200
+  + goal_id: 234 (string)
+  + target: 200 (number)
 + (Subscription goal base)
-  + goal_id: 345
-  + target: 300
+  + goal_id: 345 (string)
+  + target: 300 (number)
 + (Subscription goal base)
-  + goal_id: 456
-  + target: 400
+  + goal_id: 456 (string)
+  + target: 400 (number)
 
 ## User previews (array) - An array of different user previews based on the User preview base object
 + (User preview base)
 + (User preview base)
-  + user_id: 234
-  + first_name: Jack
+  + user_id: 234 (string)
+  + first_name: Jack (string)
 + (User preview base)
-  + user_id: 345
-  + first_name: Jill
+  + user_id: 345 (string)
+  + first_name: Jill (string)
 + (User preview base)
-  + user_id: 456
-  + last_name: Stone
+  + user_id: 456 (string)
+  + last_name: Stone (string)
 + (User preview base)
-  + user_id: 567
-  + last_name: McLane
+  + user_id: 567 (string)
+  + last_name: McLane (string)
 
-## Campaign Response (object)
+## Campaign Response (object, fixed-type)
 + campaign (Campaign base)
-  + min_goal: 5000
+  + min_goal: 5000 (number)
 + acl (Acl)
 + Include Status success
 + Include Success message action successful
 
-## Campaign backers Response (object)
+## Create campaign Response (object, fixed-type)
++ campaign (object)
+  + campaign_id: 1 (string)
++ Include Status success
++ Include Success message action successful
+
+## Campaign backers Response (object, fixed-type)
 + previews (User previews)
 + Include Status success
 + Include Success message action successful
 
-## Users tokens Response (object)
+## Users tokens Response (object, fixed-type)
 + token (object)
   + string: lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj (string)
 + Include Status success
 
-## Error Response (object)
+## Authentication error Response (object, fixed)
 + Include Status error
-+ Include Error message action failed
++ Include Error message cant get user
 
-## Users tokens error Response (object)
+## Authentication error 2 Response (object, fixed)
++ Include Status error
++ Include Error message could not find
+
+## Authentication incorrect error Response (object, fixed)
++ Include Status error
++ Include Error message problems
+
+## Users tokens error Response (object), fixed
 + Include Status error
 + Include Error message didnt work
 
-## Users tokens wrong credentials no user Response (object)
+## Users tokens wrong credentials no user Response (object, fixed)
 + Include Status error wrong credentials
+* Include Exception type Karolina exception
 + Include Error message credentials no user
 
-## Users tokens wrong credentials incorrect Response (object)
+## Users tokens wrong credentials incorrect Response (object, fixed)
 + Include Status error wrong credentials
+* Include Exception type Karolina exception
 + Include Error message credentials incorrect
 
-## Users tokens error no password Response (object)
+## Users tokens error no password Response (object, fixed)
 + Include Status error missing credentials
++ Include Exception type Karolina exception
 + Include Error message password provided
 
-## Users tokens error email invalid Response (object)
+## Users tokens error email invalid Response (object, fixed)
 + Include Status error missing credentials
+* Include Exception type Karolina exception
 + Include Error message email invalid
 
-## Register user email exists Response (object)
+## Create user email exists Response (object, fixed)
 + Include Status error
 + Include Error message email exists
 
-## Register user invalid email Response (object)
+## Create user invalid email Response (object, fixed)
 + Include Status error invalid email
 + Include Error message invalid email
 
-## Register user short first Response (object)
+## Create user short first Response (object, fixed)
 + Include Status error invalid arguments
 + Include Error message short first name
 
-## Register user short last Response (object)
+## Create user short last Response (object, fixed)
 + Include Status error invalid arguments
 + Include Error message short last name
 
@@ -349,7 +446,7 @@ Possible errors:
 + Include User email base
 + password: password123 (string)
 
-## Register user Request (object)
+## Create user Request (object)
 + Include Users tokens Request
 + first_name: John (string)
 + last_name: Smith (string)

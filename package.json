@@ -1,0 +1,17 @@
+{
+    "name": "agitator-docs",
+    "version": "0.0.1",
+    "author": "Karolina fund",
+    "description": "Agitator docs on Apiary",
+    "private": true,
+    "dependencies": {
+        "request-promise-native": "^1.0.4"
+    },
+    "devDependencies": {
+        "dredd": "^3.5.0"
+    },
+    "engines": {
+        "node": ">= 4.0.0",
+        "npm": ">= 3.0.0"
+    }
+}
