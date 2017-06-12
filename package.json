@@ -4,11 +4,11 @@
     "author": "Karolina fund",
     "description": "Agitator docs on Apiary",
     "private": true,
-    "dependencies": {
-        "request-promise-native": "^1.0.4"
-    },
+    "dependencies": {},
     "devDependencies": {
-        "dredd": "^3.5.0"
+        "dredd": "^3.5.0",
+        "request-promise-native": "^1.0.4",
+        "request": "^2.81.0"
     },
     "engines": {
         "node": ">= 4.0.0",

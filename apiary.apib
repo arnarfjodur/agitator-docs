@@ -75,8 +75,10 @@ Returns a single campaign. You need to specify the id of the campaign and the la
 For example, you can use the information to display an single campaign page where your visitors can see all the information regarding a campaign.
 
 Possible errors:
-* Campaign is private
+* Campaign is private and Authorization header is not provided
 * Campaign does not exist
+* Authorization header is invalid
+
 
 + Request (application/json)
     + Headers
