@@ -13,7 +13,7 @@ Makes a new experiment. In the body, stage field determines what stage an experi
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -51,7 +51,7 @@ Get a preview of the experiments on the platform.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -99,7 +99,7 @@ Get a preview of all the user's experiments on the platform.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -176,7 +176,7 @@ Any previously set tags that are not sent along will be destroyed.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -199,7 +199,7 @@ Any previously set tags that are not sent along will be destroyed.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -322,7 +322,7 @@ Set the funding options for experiment. Method PATCH means partial data can be s
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -359,7 +359,7 @@ Like an experiment
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -371,7 +371,7 @@ Unlike an experiment
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -389,7 +389,7 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -421,7 +421,7 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -456,7 +456,7 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -489,7 +489,7 @@ If disabled is set, the experiment will be "deleted". The show_in specifies plac
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -522,7 +522,7 @@ In case the protocol is not provided, it will be added automatically on the serv
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -573,110 +573,10 @@ Supported types and extensions are jpg/jpeg, png, gif. This method will return a
 
 # Group Campaigns
 
-
-## Campaigns preview [/campaigns/preview/{language}/]
-
-+ Parameters
-    + language (string) - The preferred language to return, i.e. en, is, fi
-
-### Get campaigns preview [GET]
-
-Returns a list of campaigns that are funding or have been funding. Includes only basic information for preview.
-
-+ Request (application/json)
-
-+ Response 200 (application/json)
-
-    + Body
-
-            {
-              "campaigns": [
-                {
-                  "campaign_id": 131,
-                  "title": "A campaign",
-                  "short_description": "My great campaign!",
-                  "target_goal": 20,
-                  "min_goal": 2,
-                  "category_id": "3",
-                  "stage": 3,
-                  "funding_reached": 8,
-                  "funding_deadline": 1467061200,
-                  "last_day_of_funding": "2016-06-26",
-                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/131/medium/1053632624319a7e91b789c0075b8949.jpg"
-                },
-                {
-                  "campaign_id": 132,
-                  "title": "Vajaaksi jäävä testikampanja",
-                  "short_description": "Nyt lähtee! (Ehkä)",
-                  "target_goal": 100,
-                  "min_goal": 50,
-                  "category_id": "3",
-                  "stage": 5,
-                  "funding_reached": 0,
-                  "funding_deadline": 1467061200,
-                  "last_day_of_funding": "2016-06-26",
-                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/132/medium/42927d7df51536e624e86d462992920f.jpg"
-                },
-                {
-                  "campaign_id": 114,
-                  "title": "Arnar's test project",
-                  "short_description": "This is a great project!",
-                  "target_goal": 3000,
-                  "min_goal": 2000,
-                  "category_id": "378",
-                  "stage": 5,
-                  "funding_reached": 0,
-                  "funding_deadline": 556491600,
-                  "last_day_of_funding": "2017-08-19",
-                  "project_pic": "https://s3-eu-west-1.amazonaws.com/kfunddynamic/project_content_pics/114/medium/03e1fbff1d0b08e83829110ae99aea4d.jpg"
-                }
-              ]
-            }
-
-## Single campaign [/campaigns/{campaign_id}/{language}]
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-    + language (string) - The preferred language to return, i.e. en, is, fi
-
-
-
-## Campaign settings [/campaigns/{campaign_id}/settings/]
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-
-### Update campaign settings [PATCH]
-
-Update, completely or partially, campaign settings.
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-    + Body
-
-            {
-              "min_goal": 1000,
-              "video_url": "https://www.youtube.com/ljsdf",
-              "target_goal": 1500,
-              "last_day_of_funding": "2016-12-09",
-              "first_day_of_funding": "2016-10-09",
-              "project_pic": "projectpicture.jpg",
-              "creator_pic": "pictureofcreator.jpg",
-              "contact_email": "arnar@karolinafund.com".
-              "legal_creator": "Karolina Fund ehf"
-            }
-
-+ Response 200 (application/json)
-
-
 ## Campaign custom language [/campaigns/{campaign_id}/custom_language/{lang_code}]
 
 + Parameters
-    + campaign_id (string) - ID of the campaign
+    + campaign_id: 1 (string) - ID of the campaign
     + lang_code (string) - Language of the fields to update (i.e. en, is, es)
 
 ### Update custom language [PATCH]
@@ -687,7 +587,7 @@ Add custom, arbitrary language fields. Field names can be alphanum with undersco
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -706,178 +606,6 @@ Add custom, arbitrary language fields. Field names can be alphanum with undersco
 
 + Response 200 (application/json)
 
-## Campaign language [/campaigns/{campaign_id}/language/]
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-
-### Update campaign language [PATCH]
-
-Update, completely or partially, campaign language (anything translatable).
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-    + Body
-
-            {
-                "short_description": {
-                    "en": "This project is all about making my debut CD."
-                },
-                "json_description": {
-                    "en": "...."
-                },
-                "title": {
-                    "en": "This is a creatie project"
-                },
-                "tagline": {
-                    "en": "My Creative project"
-                },
-
-            }
-
-+ Response 200 (application/json)
-
-## Campaign meta [/campaigns/{campaign_id}/meta/]
-
-Any aribtrary key:value to be stored on the campaign.
-
-### Update meta [PATCH]
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-    + Body
-
-            {
-              "external_link_2": "https://www.karolinafund.com"
-            }
-
-+ Response 200 (application/json)
-
-## My campaigns [/campaigns/mycampaigns/preview/{langCode}]
-
-+ Parameters
-    + langCode (string) - The language to return in
-
-### Get my campaigns [GET]
-
-Returns all the campaigns that the current authenticated user owns.
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-+ Response 200 (application/json)
-
-    + Body
-
-            {
-              "campaigns": [
-                {
-                  "campaign_id": "115",
-                  "title": "Arnar again",
-                  "short_description": "Jepps jepps",
-                  "target_goal": 0,
-                  "min_goal": 500,
-                  "category_id": null,
-                  "stage": 0,
-                  "funding_reached": 0,
-                  "funding_deadline": 0,
-                  "last_day_of_funding": "1969-12-31",
-                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
-                },
-                {
-                  "campaign_id": "136",
-                  "title": "New project with a start date",
-                  "short_description": "Hello.",
-                  "target_goal": 0,
-                  "min_goal": 100,
-                  "category_id": null,
-                  "stage": 0,
-                  "funding_reached": 0,
-                  "funding_deadline": 1467147600,
-                  "last_day_of_funding": "2016-06-27",
-                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
-                },
-                {
-                  "campaign_id": "139",
-                  "title": "New project",
-                  "short_description": null,
-                  "target_goal": 0,
-                  "min_goal": 0,
-                  "category_id": null,
-                  "stage": 0,
-                  "funding_reached": 0,
-                  "funding_deadline": 0,
-                  "last_day_of_funding": "1969-12-31",
-                  "project_pic": "https://agitator-mesenaatti.karolina.io/static/img/placeholder.png"
-                }
-              ]
-            }
-
-
-## Campaign admin [/campaigns/{campaign_id}/admin/]
-
-The part of the campaign that only an admin can change
-
-+ Parameters
-    + campaign_id (string) - ID of the campaign
-
-### Get campaign admin [GET]
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-+ Response 200 (application/json)
-
-
-        {
-          "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
-          "stage": 2,
-          "contact_email": "arnar@karolinafund.com",
-          "category_id": "23",
-          "scope": null,
-          "legal_creator": "Karolina Fund ehf",
-          "commission_pertrans": "0.20",
-          "commission_percent": "5.1000"
-        }
-
-### Update campaign admin [PATCH]
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer {JWToken}
-
-    + Body
-
-            {
-              "payment_wallet_uuid": "kdfmaa56f-sfda-49c3-8ef5-d7f24fb6ksui",
-              "stage": 2,
-              "contact_email": "arnar@karolinafund.com",
-              "category_id": "23",
-              "scope": null,
-              "legal_creator": "Karolina Fund ehf",
-              "commission_pertrans": "0.20",
-              "commission_percent": "5.1000"
-            }
-
-+ Response 200 (application/json)
-
-
 ## Campaign files [/campaigns/{campaign_id}/files/]
 
 You need to provide the file in the body, encoded as form-data.
@@ -894,7 +622,7 @@ The body should include the following:
 Especially important is the key **name="file"**, which has to be exactly that and not for example the name of the input field.
 
 + Parameters
-    + campaign_id (string) - ID of the campaign
+    + campaign_id: 1 (string) - ID of the campaign
 
 ### Upload a new file [POST]
 
@@ -902,7 +630,7 @@ Especially important is the key **name="file"**, which has to be exactly that an
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 
 + Response 200 (application/json)
@@ -918,8 +646,8 @@ Especially important is the key **name="file"**, which has to be exactly that an
 ## Campaign rewards in a language [/campaigns/{campaign_id}/rewards/{language}/]
 
 + Parameters
-    + campaign_id (string) - ID of the campaign
-    + language (string) - The preferred language to return, i.e. en, is, fi
+    + campaign_id: 1 (string) - ID of the campaign
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
 
 ### Get rewards for a campaign [GET]
 
@@ -974,7 +702,7 @@ Use *[Get campaign](#reference/campaigns/single-campaign/get-campaign)* instead.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -994,7 +722,7 @@ Use *[Get campaign](#reference/campaigns/single-campaign/get-campaign)* instead.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 
 + Response 200 (application/json)
@@ -1015,7 +743,7 @@ Updates the reward by replacing it with the provided data. What is not provided 
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1037,7 +765,7 @@ Updates the reward by replacing it with the provided data. What is not provided 
 
 + Parameters
     + reward_id (string) - ID of the campaign
-    + language (string) - The preferred language to return, i.e. en, is, fi
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
 
 ### Get single reward [GET]
 
@@ -1047,7 +775,7 @@ NOTE: Todo. This method is not impemented yet.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 
 + Response 200 (application/json)
@@ -1084,7 +812,7 @@ NOTE: Todo. This method is not impemented yet.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1106,7 +834,7 @@ NOTE: Todo. This method is not impemented yet.
 ## Campaign pledges [/campaigns/{campaign_id}/pledges/]
 
 + Parameters
-    + campaign_id (string) - ID of the campaign
+    + campaign_id: 1 (string) - ID of the campaign
 
 ### Make a new pledge [POST]
 
@@ -1119,7 +847,7 @@ The "pledge_meta" must include the fields email, first_name and last_name. The f
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1262,7 +990,7 @@ Get the user's profile
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -1298,7 +1026,7 @@ Get the user's profile
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
 
@@ -1343,7 +1071,7 @@ Get the user's profile
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1371,7 +1099,7 @@ Get the user's profile
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1433,7 +1161,7 @@ Get the user's profile
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1462,7 +1190,7 @@ Any previously set tags that are not sent along will be destroyed.
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1486,7 +1214,7 @@ In case the protocol is not provided, it will be added automatically on the serv
 
     + Headers
 
-            Authorization: Bearer {JWToken}
+            Authorization: Bearer <JWToken>
 
     + Body
 
@@ -1507,7 +1235,7 @@ In case the protocol is not provided, it will be added automatically on the serv
 ## Subscription to campaign [/campaigns/{campaign_id}/subscriptions/]
 
 + Parameters
-    + campaign_id (string) - ID of the campaign you want to subscribe to
+    + campaign_id: 1 (string) - ID of the campaign you want to subscribe to
 
 ### Create new subscription [POST]
 

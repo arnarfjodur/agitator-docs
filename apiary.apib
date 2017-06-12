@@ -79,14 +79,13 @@ Possible errors:
 * Campaign does not exist
 * Authorization header is invalid
 
-
 + Request (application/json)
     + Headers
 
               Authorization: Bearer <JWToken>
 
 + Response 200 (application/json)
-    + Attributes (Campaign Response)
+    + Attributes (Get campaign Response)
 
 + Request private campaign (application/json)
 
@@ -106,6 +105,20 @@ Possible errors:
 + Response 500 (application/json)
     + Attributes (Authentication incorrect error Response)
 
+## Campaigns previews [/campaigns/preview/{language}/]
+
++ Parameters
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
+
+## Get campaigns previews [GET]
+
+Returns a list of campaigns that are currently funding or have been funding in the past. Includes only basic information for preview (such as title, goal, funding reached, last day of funding, picture url, etc.).
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (Get campaigns previews Response)
+
 ## Campaign backers [/campaigns/{campaign_id}/backers]
 
 + Parameters
@@ -118,7 +131,246 @@ Returns an array of users that have backed a campaign. You need to specify the i
 + Request (application/json)
 
 + Response 200 (application/json)
-    + Attributes (Campaign backers Response)
+    + Attributes (Get campaign backers Response)
+
+
+## Campaign language [/campaigns/{campaign_id}/language/]
+
+Allows you to update the content of a campaign. You need to provide the id of the campaign that you wish to update, the language of the text and include an **Authorization** header for a user that is allowed to update this campaign. You can update pre-defined sections such as: title, short description, tagline, etc.
+
+Possible errors:
+* Authorization header is not provided
+* Campaign does not exist
+* Authorization header is invalid
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Update campaign language [PATCH]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Attribute (Update campaign language Request)
+
++ Response 200 (application/json)
+    + Attributes (Update campaign language Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+## Campaign settings [/campaigns/{campaign_id}/settings/]
+
+Allows you to update the settings of a campaign. You need to provide the id of the campaign that you wish to update and include an **Authorization** header for a user that is allowed to update this campaign. Some of the settings that you can update are: target goal, funding deadline, campaign picture, contact email, etc.
+
+Possible errors:
+* Authorization header is not provided
+* Campaign does not exist
+* Authorization header is invalid
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Update campaign settings [PATCH]
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Attributes (Update campaign settings Request)
+
++ Response 200 (application/json)
+    + Attributes (Update campaign settings Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+## Campaign meta [/campaigns/{campaign_id}/meta/]
+
+Allows you to save any aribtrary key:value pair to a campaign.
+
+Possible errors:
+* Authorization header is not provided
+* Campaign does not exist
+* Authorization header is invalid
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Update campaign meta [PATCH]
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Attributes (Update campaign meta Request)
+
++ Response 200 (application/json)
+    + Attributes (Update campaign meta Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+## Campaign admin [/campaigns/{campaign_id}/admin/]
+
+Allows an admin user to view and edit the admin settings of the campaign. You need to provide the id of the campaign that you wish to update and an **Authorization** header for an admin user. You can see settings such as: payment wallet id, stage, commision percentage, etc.
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Get campaign admin [GET]
+
+Possible errors:
+* Authorization header is not provided
+* Campaign does not exist
+* Authorization header is invalid
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
++ Response 200 (application/json)
+    + Attribute (Get campaign admin Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+### Update campaign admin [PATCH]
+
+Possible errors:
+* Authorization header is not provided
+* Campaign does not exist
+* Authorization header is invalid
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Attribute (Update campaign admin Request)
+
++ Response 200 (application/json)
+    + Attribute (Update campaign admin Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error 3 Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
+
+## My campaigns previews [/campaigns/mycampaigns/preview/{language}]
+
++ Parameters
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
+
+### Get my campaigns previews [GET]
+
+Allows you to fetch an array of campaigns for the currently authenticated user. You need to include an **Authorization** header that defines the user for which the campaigns are being fetched. The returned campaigns are those that the authorized user can edit.
+
+Possible errors:
+* Authorization header is not provided
+* Authorization header is invalid
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
++ Response 200 (application/json)
+    + Attributes (Get campaigns previews Response)
+
++ Request without authorization (application/json)
+
++ Response 500 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error Response)
 
 # Group Users
 
@@ -138,7 +390,7 @@ Possible errors:
     + Attributes (Create user Request)
 
 + Response 200 (application/json)
-    + Attributes (Users tokens Response)
+    + Attributes (Get users tokens Response)
 
 + Request email already in use (application/json)
     + Attributes (Create user Request)
@@ -169,38 +421,38 @@ Possible errors:
 * Not a valid email
 
 + Request (application/json)
-    + Attributes (Users tokens Request)
+    + Attributes (Get users tokens Request)
 
 + Response 200 (application/json)
-    + Attributes (Users tokens Response)
+    + Attributes (Get users tokens Response)
 
 + Request non-existing user (application/json)
-    + Attributes (Users tokens Request)
+    + Attributes (Get users tokens Request)
       + email: example@email.comm
 
 + Response 401 (application/json)
-    + Attributes (Users tokens wrong credentials no user Response)
+    + Attributes (Get users tokens wrong credentials no user Response)
 
 + Request wrong password (application/json)
-    + Attributes (Users tokens Request)
+    + Attributes (Get users tokens Request)
       + password: password1234
 
 + Response 401 (application/json)
-    + Attributes (Users tokens wrong credentials incorrect Response)
+    + Attributes (Get users tokens wrong credentials incorrect Response)
 
 + Request wrong email format (application/json)
     + Attributes
-      + Include Users tokens Request
+      + Include Get users tokens Request
       + email: example_email.com
 
 + Response 400 (application/json)
-    + Attributes (Users tokens error email invalid Response)
+    + Attributes (Get users tokens error email invalid Response)
 
 + Request no password provided (application/json)
     + Attributes (User email base)
 
 + Response 400 (application/json)
-    + Attributes (Users tokens error no password Response)
+    + Attributes (Get users tokens error no password Response)
 
 # Data Structures
 
@@ -261,19 +513,34 @@ Possible errors:
 ## Error message problems (object, fixed)
 + message: `Problems with platform authentication: Wrong signature - Please contact administrator.` (string)
 
+## Error message not authorized (object, fixed)
++ message: `Sorry, you are not authorized to do this.` (string)
+
 ## Exception type Karolina exception (object, fixed)
 + exception_type: `Karolina\\Exception` (string)
 
+## Success message updated ok (object, fixed)
++ message: `updated ok` (string)
+
 ## Success message action successful (object, fixed)
 + message: `Action successful` (string)
+
+## Success message action successful 2 (object, fixed)
++ message: `Action successful.` (string)
+
+## Success message roger (object, fixed)
++ message: `roger` (string)
 
 ## Acl (array, fixed-type)
 + view (string)
 + edit (string)
 + admin (string)
 
-## Campaign base (object, fixed-type)
+## Campaign id base (object, fixed-type)
 + campaign_id: 1 (string)
+
+## Campaign base (object, fixed-type)
++ Include Campaign id base
 + title: My Campaign (string)
 + short_description (string, nullable)
 + tagline (string, nullable)
@@ -321,6 +588,19 @@ Possible errors:
 + short_description: Some user (string)
 + image (string, optional)
 
+## Campaign preview base (object, fixed-type)
++ campaign_id: 123 (string)
++ title: My Campaign (string)
++ short_description (string, nullable)
++ target_goal: 0 (number)
++ min_goal: 0 (number)
++ category_id: 1 (string, nullable)
++ stage: 0 (number)
++ funding_reached: 0 (number)
++ funding_deadline: 0 (number)
++ last_day_of_funding: `1969-12-31` (string)
++ project_pic (string)
+
 ## User email base (object, fixed-type)
 + email: example@example.com (string)
 
@@ -354,7 +634,7 @@ Possible errors:
   + goal_id: 456 (string)
   + target: 400 (number)
 
-## User previews (array) - An array of different user previews based on the User preview base object
+## Users previews (array) - An array of different user previews based on the User preview base object
 + (User preview base)
 + (User preview base)
   + user_id: 234 (string)
@@ -369,61 +649,109 @@ Possible errors:
   + user_id: 567 (string)
   + last_name: McLane (string)
 
-## Campaign Response (object, fixed-type)
+## Campaigns previews (array) - An array of different user previews based on the User preview base object
++ (Campaign preview base)
++ (Campaign preview base)
+  + campaign_id: 234 (string)
+  + min_goal: 200 (number)
+  + funding_reached: 100
++ (Campaign preview base)
+  + campaign_id: 345 (string)
+  + min_goal: 300 (number)
+  + stage: 3
+  + funding_reached: 350
++ (Campaign preview base)
+  + campaign_id: 456 (string)
+  + min_goal: 500 (number)
+  + stage: 4
+  + funding_reached: 600
++ (Campaign preview base)
+  + campaign_id: 567 (string)
+  + min_goal: 1000 (number)
+  + stage: 5
+  + funding_reached: 700
++ (Campaign preview base)
+  + campaign_id: 678 (string)
+  + min_goal: 5000 (number)
+  + stage: 6
+  + funding_reached: 3500
+
+## Get campaign Response (object, fixed-type)
 + campaign (Campaign base)
   + min_goal: 5000 (number)
 + acl (Acl)
 + Include Status success
 + Include Success message action successful
 
+## Get campaigns previews Response (object, fixed-type)
++ campaigns (Campaigns previews)
++ Include Status success
++ Include Success message action successful
+
 ## Create campaign Response (object, fixed-type)
 + campaign (object)
-  + campaign_id: 1 (string)
+  + Include Campaign id base
 + Include Status success
 + Include Success message action successful
 
-## Campaign backers Response (object, fixed-type)
-+ previews (User previews)
+## Update campaign settings Response (object, fixed)
++ Include Status success
++ Include Success message updated ok
+
+## Get campaign backers Response (object, fixed-type)
++ previews (Users previews)
 + Include Status success
 + Include Success message action successful
 
-## Users tokens Response (object, fixed-type)
+## Update campaign meta Response (object, fixed)
++ Include Status success
++ Include Success message updated ok
+
+## Update campaign language Response (object, fixed)
++ Include Status success
++ Include Success message action successful 2
+
+## Get campaign admin Response (object, fixed-type)
++ payment_wallet_uuid: `a54528ac-bd19-4447-94ce-2244504febfe` (string)
++ stage: 2 (number)
++ contact_email: arnar@karolinafund.com (string, nullable)
++ category_id: 1 (string, nullable)
++ scope: `` (string, nullable)
++ legal_creator: Karolina Fund ehf (string, nullable)
++ commission_pertrans: 0.20 (string)
++ commission_percent: 5.1000 (string)
++ Include Status success
++ Include Success message action successful 2
+
+## Update campaign admin Response (object, fixed)
++ Include Status success
++ Include Success message roger
+
+## Get users tokens Response (object, fixed-type)
 + token (object)
   + string: lkjsdsdjsdaf.lkjasdlfksdfj.laksjdflkjsadklj (string)
 + Include Status success
 
-## Authentication error Response (object, fixed)
-+ Include Status error
-+ Include Error message cant get user
-
-## Authentication error 2 Response (object, fixed)
-+ Include Status error
-+ Include Error message could not find
-
-## Authentication incorrect error Response (object, fixed)
-+ Include Status error
-+ Include Error message problems
-
-## Users tokens error Response (object), fixed
+## Get users tokens error Response (object, fixed)
 + Include Status error
 + Include Error message didnt work
 
-## Users tokens wrong credentials no user Response (object, fixed)
+## Get users tokens wrong credentials no user Response (object, fixed)
 + Include Status error wrong credentials
 * Include Exception type Karolina exception
 + Include Error message credentials no user
 
-## Users tokens wrong credentials incorrect Response (object, fixed)
+## Get users tokens wrong credentials incorrect Response (object, fixed)
 + Include Status error wrong credentials
 * Include Exception type Karolina exception
 + Include Error message credentials incorrect
 
-## Users tokens error no password Response (object, fixed)
+## Get users tokens error no password Response (object, fixed)
 + Include Status error missing credentials
 + Include Exception type Karolina exception
 + Include Error message password provided
 
-## Users tokens error email invalid Response (object, fixed)
+## Get users tokens error email invalid Response (object, fixed)
 + Include Status error missing credentials
 * Include Exception type Karolina exception
 + Include Error message email invalid
@@ -444,11 +772,61 @@ Possible errors:
 + Include Status error invalid arguments
 + Include Error message short last name
 
-## Users tokens Request (object)
+## Authentication error Response (object, fixed)
++ Include Status error
++ Include Error message cant get user
+
+## Authentication error 2 Response (object, fixed)
++ Include Status error
++ Include Error message could not find
+
+## Authentication error 3 Response (object, fixed)
++ Include Status error
++ Include Error message not authorized
+
+## Authentication incorrect error Response (object, fixed)
++ Include Status error
++ Include Error message problems
+
+## Get users tokens Request (object)
 + Include User email base
 + password: password123 (string)
 
 ## Create user Request (object)
-+ Include Users tokens Request
++ Include Get users tokens Request
 + first_name: John (string)
 + last_name: Smith (string)
+
+## Update campaign settings Request (object)
++ min_goal: 1000 (number)
++ video_url: https://vimeo.com/220985345 (string)
++ target_goal: 1500 (number)
++ last_day_of_funding: `2016-12-09` (string)
++ first_day_of_funding: `2016-10-09` (string)
++ project_pic: projectpicture.jpg (string)
++ creator_pic: pictureofcreator.jpg (string)
++ contact_email: arnar@karolinafund.com (string)
++ legal_creator: Karolina Fund ehf (string)
+
+## Update campaign meta Request (object)
++ external_link: https://www.karolinafund.com (string)
+
+## Update campaign admin Request (object)
++ payment_wallet_uuid: `a54528ac-bd19-4447-94ce-2244504febfe` (string)
++ stage: 2 (number)
++ contact_email: arnar@karolinafund.com (string)
++ category_id: 1 (string, nullable)
++ scope: `` (string)
++ legal_creator: Karolina Fund ehf (string)
++ commission_pertrans: 0.20 (string)
++ commission_percent: 5.1000 (string)
+
+## Update campaign language Request (object)
++ short_description
+    + en: This project is all about making my debut CD. (string)
++ json_description
+    + en: ´{"data":[{"type":"text","data":{"text":"Annað en þetta!","format":"html"}}]}´ (string)
++ title
+    + en: This is a creative project (string)
++ tagline
+    + en: My Creative project (string)
