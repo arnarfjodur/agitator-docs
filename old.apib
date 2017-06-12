@@ -573,39 +573,6 @@ Supported types and extensions are jpg/jpeg, png, gif. This method will return a
 
 # Group Campaigns
 
-## Campaign custom language [/campaigns/{campaign_id}/custom_language/{lang_code}]
-
-+ Parameters
-    + campaign_id: 1 (string) - ID of the campaign
-    + lang_code (string) - Language of the fields to update (i.e. en, is, es)
-
-### Update custom language [PATCH]
-
-Add custom, arbitrary language fields. Field names can be alphanum with underscores. Fields must specify format (plaintext, html or json) of the content to be inserted.
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer <JWToken>
-
-    + Body
-
-            {
-              "custom_language": {
-                "creator_biography": {
-                  "value": "<h1>The story of the life of the creator</h1>",
-                  "format": "html"
-                },
-                "additional_thoughts": {
-                  "value": "Here's what some people think of this project",
-                  "format": "plaintext"
-                }
-              }
-            }
-
-+ Response 200 (application/json)
-
 ## Campaign files [/campaigns/{campaign_id}/files/]
 
 You need to provide the file in the body, encoded as form-data.

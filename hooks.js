@@ -91,6 +91,33 @@ before('Campaigns > Campaign language > Update campaign language > Example 4', f
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
 })
 
+before('Campaigns > Custom campaign language > Update custom campaign language > Example 1', function (transaction, done) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/99
+    transaction.skip = true
+    if (responseStash.hasOwnProperty('testCampaignId')) {
+        replaceCampaignId(transaction, responseStash.testCampaignId)
+        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
+        done()
+    } else {
+        createTestCampaign(transaction, done, true, false)
+    }
+})
+before('Campaigns > Custom campaign language > Update custom campaign language > Example 3', function (transaction, done) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/100
+    transaction.skip = true
+    // TODO: make a deleted campaign dynamically instead of hardcoding 9999
+    replaceCampaignId(transaction, '9999')
+    if (responseStash.hasOwnProperty('registeredUserToken')) {
+        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
+        done()
+    } else {
+        injectAuthorizationToken(transaction, done, 'creator')
+    }
+})
+before('Campaigns > Custom campaign language > Update custom campaign language > Example 4', function (transaction) {
+    transaction.request.headers.Authorization = 'Bearer ' + tokenSample
+})
+
 before('Campaigns > Campaign settings > Update campaign settings > Example 1', function (transaction, done) {
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)

@@ -177,6 +177,45 @@ Possible errors:
 + Response 500 (application/json)
     + Attributes (Authentication incorrect error Response)
 
+## Custom campaign language [/campaigns/{campaign_id}/custom_language/{language}]
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+    + language: en (string) - Language of the fields to update (i.e. en, is, es)
+
+### Update custom campaign language [PATCH]
+
+Allows you to update the content of a campaign. You need to provide the id of the campaign that you wish to update, the language of the text and include an **Authorization** header for a user that is allowed to update this campaign. You can create any arbitrary language fields. Field names can be alphanumeric with underscores. You must also specify the format (plaintext, html or json) of the provided content.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Attributes (Update custom campaign language Request)
+
++ Response 200 (application/json)
+    + Attribute (Update custom campaign language Response)
+
++ Request without authorization (application/json)
+
++ Response 401 (application/json)
+    + Attributes (Authentication error 4 Response)
+
++ Request non-existing campaign (application/json)
+
++ Response 404 (application/json)
+    + Attributes (Authentication error Response)
+
++ Request invalid authorization (application/json)
+    + Headers
+
+              Authorization: Bearer <JWToken>
+
++ Response 500 (application/json)
+    + Attributes (Authentication incorrect error 2 Response)
+
 ## Campaign settings [/campaigns/{campaign_id}/settings/]
 
 Allows you to update the settings of a campaign. You need to provide the id of the campaign that you wish to update and include an **Authorization** header for a user that is allowed to update this campaign. Some of the settings that you can update are: target goal, funding deadline, campaign picture, contact email, etc.
@@ -462,6 +501,9 @@ Possible errors:
 ## Status error (object, fixed)
 + status: error (string)
 
+## Status error authorization required (object, fixed)
++ status: authorization_required (string)
+
 ## Status error email exists (object, fixed)
 + status: email_already_exists (string)
 
@@ -478,10 +520,10 @@ Possible errors:
 + status: invalid_arguments (string)
 
 ## Error message didnt work (object, fixed)
-+ message: Sorry, didn't work (string)
++ message: `Sorry, didn't work` (string)
 
 ## Error message password provided (object, fixed)
-+ message: Password must be provided. (string)
++ message: `Password must be provided.` (string)
 
 ## Error message email invalid (object, fixed)
 + message: `Not a valid e-mail` (string)
@@ -490,16 +532,16 @@ Possible errors:
 + message: `E-mail address is not valid.` (string)
 
 ## Error message short first name (object, fixed)
-+ message: First name must be at least 2 characters (string)
++ message: `First name must be at least 2 characters` (string)
 
 ## Error message short last name (object, fixed)
-+ message: Last name must be at least 2 characters (string)
++ message: `Last name must be at least 2 characters` (string)
 
 ## Error message email exists (object, fixed)
 + message: `A user with this e-mail address already exists.` (string)
 
 ## Error message credentials no user (object, fixed)
-+ message: User does not exist. (string)
++ message: `User does not exist.` (string)
 
 ## Error message credentials incorrect (object, fixed)
 + message: `Password or e-mail incorrect, or user does not exist.` (string)
@@ -513,8 +555,14 @@ Possible errors:
 ## Error message problems (object, fixed)
 + message: `Problems with platform authentication: Wrong signature - Please contact administrator.` (string)
 
+## Error message wrong signature (object, fixed)
++ message: `Wrong signature` (string)
+
 ## Error message not authorized (object, fixed)
 + message: `Sorry, you are not authorized to do this.` (string)
+
+## Error message logged in (object, fixed)
++ message: `You must be logged in to do this.` (string)
 
 ## Exception type Karolina exception (object, fixed)
 + exception_type: `Karolina\\Exception` (string)
@@ -711,6 +759,10 @@ Possible errors:
 + Include Status success
 + Include Success message action successful 2
 
+## Update custom campaign language Response (object, fixed)
++ Include Status success
++ Include Success message action successful 2
+
 ## Get campaign admin Response (object, fixed-type)
 + payment_wallet_uuid: `a54528ac-bd19-4447-94ce-2244504febfe` (string)
 + stage: 2 (number)
@@ -784,9 +836,17 @@ Possible errors:
 + Include Status error
 + Include Error message not authorized
 
+## Authentication error 4 Response (object, fixed)
++ Include Status error authorization required
++ Include Error message logged in
+
 ## Authentication incorrect error Response (object, fixed)
 + Include Status error
 + Include Error message problems
+
+## Authentication incorrect error 2 Response (object, fixed)
++ Include Status error
++ Include Error message wrong signature
 
 ## Get users tokens Request (object)
 + Include User email base
@@ -830,3 +890,12 @@ Possible errors:
     + en: This is a creative project (string)
 + tagline
     + en: My Creative project (string)
+
+## Update custom campaign language Request (object)
++ custom_language
+    + creator_biography
+        + value: <h1>The story of the life of the creator</h1> (string)
+        + format: html (string)
+    + additional_thoughts
+        + value: Here's what some people think of this project (string)
+        + format: plaintext (string)
