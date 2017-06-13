@@ -852,7 +852,7 @@ Possible errors:
 + site: google.com (string)
 
 ## User preview base (object, fixed-type)
-+ user_id: 123 (number)
++ user_id: 123 (string)
 + first_name: John (string)
 + last_name: Smith (string)
 + short_description: Some user (string, nullable)
@@ -910,22 +910,22 @@ Possible errors:
 ## Experiments previews (array)
 + (Experiment preview base)
 + (Experiment preview base)
-  + experiment_id: 234
+  + experiment_id: 234 (string)
 + (Experiment preview base)
-  + experiment_id: 345
-  + stage: 1
+  + experiment_id: 345 (string)
+  + stage: 1 (number)
 + (Experiment preview base)
-  + experiment_id: 456
-  + stage: 2
+  + experiment_id: 456 (string)
+  + stage: 2 (number)
 + (Experiment preview base)
-  + experiment_id: 567
-  + stage: 3
+  + experiment_id: 567 (string)
+  + stage: 3 (number)
 + (Experiment preview base)
-  + experiment_id: 678
-  + stage: 4
+  + experiment_id: 678 (string)
+  + stage: 4 (number)
 + (Experiment preview base)
-  + experiment_id: 789
-  + stage: 5
+  + experiment_id: 789 (string)
+  + stage: 5 (number)
 
 ## Rewards (array) - An array of different rewards based on the Reward base object
 + (Reward base)
@@ -960,16 +960,16 @@ Possible errors:
 ## Tags (array) - An array of different tags based on the Tag base object
 + (Tag base)
 + (Tag base)
-  + id: 234 (number)
+  + id: 234 (string)
   + label: art (string)
 + (Tag base)
-  + id: 345 (number)
+  + id: 345 (string)
   + label: poetry (string)
 + (Tag base)
-  + id: 456 (number)
+  + id: 456 (string)
   + label: future (string)
 + (Tag base)
-  + id: 567 (number)
+  + id: 567 (string)
   + label: IoT (string)
 
 ## Links (array) - An array of different links based on the Link base object
