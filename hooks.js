@@ -20,13 +20,15 @@ var mockHost = 'private-835e99-agitator.apiary-mock.com'
 var responseStash = {}
 var tempStash = false
 
+/*
+ * HOOKS
+ */
+
+/*
+ * Campaigns
+ */
 before('Campaigns > Campaigns > Create new campaign > Example 1', function (transaction, done) {
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'creator')
-    }
+    setToken(transaction, done, 'creator')
 })
 after('Campaigns > Campaigns > Create new campaign > Example 1', function (transaction) {
     if (transaction.real) {
@@ -63,8 +65,7 @@ before('Campaigns > Campaign backers > Get campaign backers', function (transact
 before('Campaigns > Campaign language > Update campaign language > Example 1', function (transaction, done) {
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
+        setToken(transaction, done, 'creator')
     } else {
         createTestCampaign(transaction, done, true, false)
     }
@@ -78,12 +79,7 @@ before('Campaigns > Campaign language > Update campaign language > Example 3', f
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'creator')
-    }
+    setToken(transaction, done, 'creator')
 })
 before('Campaigns > Campaign language > Update campaign language > Example 4', function (transaction) {
     // BUG: https://github.com/arnarfjodur/Agitator/issues/93
@@ -96,8 +92,7 @@ before('Campaigns > Custom campaign language > Update custom campaign language >
     transaction.skip = true
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
+        setToken(transaction, done, 'creator')
     } else {
         createTestCampaign(transaction, done, true, false)
     }
@@ -107,12 +102,7 @@ before('Campaigns > Custom campaign language > Update custom campaign language >
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'creator')
-    }
+    setToken(transaction, done, 'creator')
 })
 before('Campaigns > Custom campaign language > Update custom campaign language > Example 4', function (transaction) {
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
@@ -121,8 +111,7 @@ before('Campaigns > Custom campaign language > Update custom campaign language >
 before('Campaigns > Campaign settings > Update campaign settings > Example 1', function (transaction, done) {
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
+        setToken(transaction, done, 'creator')
     } else {
         createTestCampaign(transaction, done, true, false)
     }
@@ -136,12 +125,7 @@ before('Campaigns > Campaign settings > Update campaign settings > Example 3', f
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'creator')
-    }
+    setToken(transaction, done, 'creator')
 })
 before('Campaigns > Campaign settings > Update campaign settings > Example 4', function (transaction) {
     // BUG: https://github.com/arnarfjodur/Agitator/issues/93
@@ -152,8 +136,7 @@ before('Campaigns > Campaign settings > Update campaign settings > Example 4', f
 before('Campaigns > Campaign meta > Update campaign meta > Example 1', function (transaction, done) {
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
+        setToken(transaction, done, 'creator')
     } else {
         createTestCampaign(transaction, done, true, false)
     }
@@ -163,12 +146,7 @@ before('Campaigns > Campaign meta > Update campaign meta > Example 3', function 
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('adminUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'admin')
-    }
+    setToken(transaction, done, 'admin')
 })
 before('Campaigns > Campaign meta > Update campaign meta > Example 4', function (transaction) {
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
@@ -179,12 +157,7 @@ before('Campaigns > Campaign admin > Get campaign admin > Example 1', function (
     transaction.skip = true
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        if (responseStash.hasOwnProperty('adminUserToken')) {
-            transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-            done()
-        } else {
-            injectAuthorizationToken(transaction, done, 'admin')
-        }
+        setToken(transaction, done, 'admin')
     } else {
         createTestCampaign(transaction, done, true, true)
     }
@@ -198,12 +171,7 @@ before('Campaigns > Campaign admin > Get campaign admin > Example 3', function (
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('adminUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'admin')
-    }
+    setToken(transaction, done, 'admin')
 })
 before('Campaigns > Campaign admin > Get campaign admin > Example 4', function (transaction) {
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
@@ -212,12 +180,7 @@ before('Campaigns > Campaign admin > Get campaign admin > Example 4', function (
 before('Campaigns > Campaign admin > Update campaign admin > Example 1', function (transaction, done) {
     if (responseStash.hasOwnProperty('testCampaignId')) {
         replaceCampaignId(transaction, responseStash.testCampaignId)
-        if (responseStash.hasOwnProperty('adminUserToken')) {
-            transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-            done()
-        } else {
-            injectAuthorizationToken(transaction, done, 'admin')
-        }
+        setToken(transaction, done, 'admin')
     } else {
         createTestCampaign(transaction, done, true, true)
     }
@@ -227,12 +190,7 @@ before('Campaigns > Campaign admin > Update campaign admin > Example 3', functio
     transaction.skip = true
     // TODO: make a deleted campaign dynamically instead of hardcoding 9999
     replaceCampaignId(transaction, '9999')
-    if (responseStash.hasOwnProperty('adminUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'admin')
-    }
+    setToken(transaction, done, 'admin')
 })
 before('Campaigns > Campaign admin > Update campaign admin > Example 4', function (transaction) {
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
@@ -241,12 +199,7 @@ before('Campaigns > Campaign admin > Update campaign admin > Example 4', functio
 before('Campaigns > My campaigns previews > Get my campaigns previews > Example 1', function (transaction, done) {
     // BUG: https://github.com/arnarfjodur/Agitator/issues/98
     transaction.skip = true
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
-        transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
-        done()
-    } else {
-        injectAuthorizationToken(transaction, done, 'creator')
-    }
+    setToken(transaction, done, 'creator')
 })
 before('Campaigns > My campaigns previews > Get my campaigns previews > Example 2', function (transaction) {
     // BUG: https://github.com/arnarfjodur/Agitator/issues/94
@@ -256,6 +209,9 @@ before('Campaigns > My campaigns previews > Get my campaigns previews > Example 
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
 })
 
+/*
+ * Users
+ */
 before('Users > Users > Create a new user > Example 1', function (transaction) {
     var generatedEmail = 'test_user' + getTimestamp() + '@example.com'
     if (!responseStash.hasOwnProperty('registeredUserEmail')) {
@@ -268,11 +224,9 @@ after('Users > Users > Create a new user > Example 1', function (transaction) {
         if (tempStash) {
             responseStash.registeredUserEmail = tempStash
         }
-        if (!responseStash.hasOwnProperty('registeredUserToken')) {
-            var jsonBody = JSON.parse(transaction.real.body)
-            var token = jsonBody.token.string
-            responseStash.registeredUserToken = token
-        }
+        var jsonBody = JSON.parse(transaction.real.body)
+        var token = jsonBody.token.string
+        saveToken(token, 'creator')
     }
     tempStash = false
 })
@@ -327,13 +281,97 @@ before('Users > Users > Generate a token for a user > Example 5', function (tran
     replaceUserEmail(transaction)
 })
 
+before('Users > Users password changes > Change a password > Example 1', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/101
+    transaction.skip = true
+})
+before('Users > Users password changes > Change a password > Example 2', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/101
+    transaction.skip = true
+})
+before('Users > Users password changes > Change a password > Example 3', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/101
+    transaction.skip = true
+})
+before('Users > Users password changes > Change a password > Example 4', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/101
+    transaction.skip = true
+})
+
+before('Users > Users profile > Get users profile > Example 1', function (transaction, done) {
+    setToken(transaction, done, 'admin')
+})
+before('Users > Users profile > Get users profile > Example 2', function (transaction) {
+    // TODO: make a non-existing user dynamically instead of hardcoding 9999
+    replaceUserId(transaction, '9999')
+})
+before('Users > Users profile > Get users profile > Example 3', function (transaction) {
+    transaction.request.headers.Authorization = 'Bearer ' + tokenSample
+})
+
+before('Users > My password > Change my password > Example 1', function (transaction, done) {
+    setToken(transaction, done, 'creator')
+})
+before('Users > My password > Change my password > Example 3', function (transaction) {
+    transaction.request.headers.Authorization = 'Bearer ' + tokenSample
+})
+
+before('Users > My tags > Set my tags > Example 1', function (transaction, done) {
+    setToken(transaction, done, 'creator')
+})
+before('Users > My tags > Set my tags > Example 2', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/102
+    transaction.skip = true
+})
+before('Users > My tags > Set my tags > Example 3', function (transaction) {
+    transaction.request.headers.Authorization = 'Bearer ' + tokenSample
+})
+before('Users > My tags > Set my tags > Example 4', function (transaction, done) {
+    // parse request body from API description
+    var requestBody = JSON.parse(transaction.request.body)
+    // TODO: make a non existing tag dynamically instead of hardcoding 234
+    requestBody['tags'] = ['234']
+    // stringify the new body to request
+    transaction.request.body = JSON.stringify(requestBody)
+    setToken(transaction, done, 'creator')
+})
+
+/*
+ * HELPER FUNCTIONS
+ */
+
+
+/*
+ * Sets an authorization token for the transaction
+ */
+function setToken(transaction, done, type) {
+    var tokenKey = type + 'UserToken'
+    if (type === 'admin' || type === 'creator') {
+        if (responseStash.hasOwnProperty(tokenKey)) {
+            transaction.request.headers.Authorization = 'Bearer ' + responseStash[tokenKey]
+            done()
+        } else {
+            injectAuthorizationToken(transaction, done, type)
+        }
+    } else {
+        console.log('cannot set token, type not recognized')
+    }
+}
+/*
+ * Saves an authorization token to the stash
+ */
+function saveToken(token, type) {
+    var tokenKey = type + 'UserToken'
+    responseStash[tokenKey] = token
+}
+
 function getTimestamp() {
     return new Date()
         .getTime()
 }
 
 /*
- * This function replaces the email for the user actions with a unique generated email to be used in all user actions
+ * Replaces the email for the user actions with a unique generated email to be used in all user actions
  */
 function replaceUserEmail(transaction, email = false) {
 
@@ -353,10 +391,10 @@ function replaceUserEmail(transaction, email = false) {
 }
 
 /*
- * This function replaces the campaign ID in the request URL
+ * Replaces the campaign ID in the request URL
  */
 function replaceCampaignId(transaction, newId) {
-    console.log('replacing campaign id with:' + newId)
+    console.log('replacing campaign id with: ' + newId)
     var id = '1'
 
     transaction.request.uri = transaction.request.uri.replace(id, newId)
@@ -364,7 +402,18 @@ function replaceCampaignId(transaction, newId) {
 }
 
 /*
- * This function injects a valid token into the Authorization header
+ * Replaces the user ID in the request URL
+ */
+function replaceUserId(transaction, newId) {
+    console.log('replacing user id with: ' + newId)
+    var id = '1'
+
+    transaction.request.uri = transaction.request.uri.replace(id, newId)
+    transaction.fullPath = transaction.fullPath.replace(id, newId)
+}
+
+/*
+ * Injects a valid token into the Authorization header
  */
 function injectAuthorizationToken(transaction, done, type = false) {
     console.log('injecting auth token')
@@ -406,6 +455,9 @@ function injectAuthorizationToken(transaction, done, type = false) {
         })
 }
 
+/*
+ * Creates a new user
+ */
 function registerCreator(transaction, done, injectToken = false, createCampaign = false, replaceCampaignId = false) {
     console.log('registering creator')
     var uri = transaction.protocol + '//' + transaction.host + '/agitator/users/'
@@ -421,10 +473,8 @@ function registerCreator(transaction, done, injectToken = false, createCampaign 
             json: true // Automatically stringifies the body to JSON)
         })
         .then(function (parsedBody) {
-            if (!responseStash.hasOwnProperty('registeredUserToken')) {
-                var token = parsedBody.token.string
-                responseStash.registeredUserToken = token
-            }
+            var token = parsedBody.token.string
+            saveToken(token, 'creator')
             if (injectToken) {
                 transaction.request.headers.Authorization = 'Bearer ' + token
             }
@@ -444,15 +494,18 @@ function registerCreator(transaction, done, injectToken = false, createCampaign 
         })
 }
 
+/*
+ * Creates a new campaign
+ */
 function createTestCampaign(transaction, done, replaceId = false, needAdmin = false) {
     console.log('creating test campaign')
     var uri = transaction.protocol + '//' + transaction.host + '/agitator/campaigns/'
-    if (responseStash.hasOwnProperty('registeredUserToken')) {
+    if (responseStash.hasOwnProperty('creatorUserToken')) {
         rp({
                 method: 'POST',
                 uri: uri,
                 headers: {
-                    'Authorization': 'Bearer ' + responseStash.registeredUserToken
+                    'Authorization': 'Bearer ' + responseStash.creatorUserToken
                 },
                 json: true // Automatically stringifies the body to JSON)
             })
@@ -465,16 +518,10 @@ function createTestCampaign(transaction, done, replaceId = false, needAdmin = fa
                     replaceCampaignId(transaction, campaignId)
                 }
                 if (needAdmin) {
-                    if (responseStash.hasOwnProperty('adminUserToken')) {
-                        transaction.request.headers.Authorization = 'Bearer ' + responseStash.adminUserToken
-                        done()
-                    } else {
-                        injectAuthorizationToken(transaction, done, 'admin')
-                    }
+                    setToken(transaction, done, 'admin')
                 } else {
-                    transaction.request.headers.Authorization = 'Bearer ' + responseStash.registeredUserToken
+                    setToken(transaction, done, 'creator')
                 }
-                done()
             })
             .catch(function (err) {
                 console.log('could not create campaign: ' + err)
