@@ -413,6 +413,418 @@ Possible errors:
 + Response 500 (application/json)
     + Attributes (Authentication incorrect error Response)
 
+## Campaign files [/campaigns/{campaign_id}/files/]
+
+You need to provide the file in the body, encoded as form-data.
+Note:
+The body should include the following:
+
+    -------------------------<boundary-offset>
+    Content-Disposition: form-data; name="file"; filename="<filename>.<extension>"
+    Content-Type: image/<extension>
+
+    <raw-image-data>
+    -------------------------<boundary-offset>
+
+Especially important is the key **name="file"**, which has to be exactly that and not for example the name of the input field.
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Upload a new file [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+
++ Response 200 (application/json)
+
+            {
+              "file": {
+                "name":"i2lkmi324oimsd.jpg"
+              }
+            }
+
+# Group Files
+
+## Image files [/files/images/]
+
+### Upload image file [POST]
+
+Supported types and extensions are jpg/jpeg, png, gif. This method will return a filename, which is used to update an image field.
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="file"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
+
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                  "image": {
+                    "filename": "533f628d-12a5-4c5c-9392-d66e9a404471.png"
+                  },
+                  "status": "success"
+                }
+
+# Group Rewards
+
+## Campaign rewards in a language [/campaigns/{campaign_id}/rewards/{language}/]
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
+
+### Get rewards for a campaign [GET]
+
+**Do not use this!** ([bug](https://github.com/arnarfjodur/Agitator/issues/49))
+
+Use *[Get campaign](#reference/campaigns/single-campaign/get-campaign)* instead.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "rewards": [
+
+                    {
+                        "reward_id": "a2652252-837d-4176-883f-b6363c17c87d",
+                        "title": "A digital copy of the CD",
+                        "amount": 30,
+                        "description": "You get a copy of the CD with some nice artwork",
+                        "image": "/projects/123/12298234.jpg",
+                        "custom_questions": []
+                    },
+                    {
+                        "reward_id": "9a638e9c-6f5f-4aba-9d1f-2468241ab987",
+                        "title": "The CD plus concert",
+                        "amount": 70,
+                        "description": "You get a copy of the CD and a ticket to the concert",
+                        "image": "/projects/123/92348123.jpg",
+                        "custom_questions": [
+                            "To what address should we ship the CD?",
+                            "In what city would you like us to hold the concert?"
+                        ]
+                    },
+                    {
+                        "reward_id": "945558f4-1211-4feb-ac9a-7c7037af745b",
+                        "title": "A private concert",
+                        "amount": 800,
+                        "description": "A private concert in your home.",
+                        "image": "/projects/123/24234.jpg",
+                        "custom_questions": []
+
+                    }
+                ]
+            }
+
+
+## Campaign rewards [/campaigns/{campaign_id}/rewards/]
+
+### Create new reward [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                    reward: {
+                        "reward_id": "52c0f3e9-883d-45c4-8409-69f09e01bea6"
+                    }
+                }
+
+## Single reward [/rewards/{reward_id}]
+
+### Remove reward [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+
++ Response 200 (application/json)
+
+    + Body
+
+                {
+                    message: "success"
+                }
+
+
+
+### Update reward [PATCH]
+
+Updates the reward by replacing it with the provided data. What is not provided does not get updated.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+            {
+              "amount": 45,
+              "image": "filename.jpg",
+              "stock": 49,
+              "vat_percentage": 24.5
+            }
+
++ Response 200 (application/json)
+
+                {
+                    "reward_id": "21"
+                    "status": "success"
+                }
+
+## Single reward [/rewards/{reward_id}/{language}]
+
++ Parameters
+    + reward_id (string) - ID of the campaign
+    + language: en (string) - The preferred language to return, i.e. en, is, fi
+
+### Get single reward [GET]
+
+NOTE: Todo. This method is not impemented yet.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "amount": 45,
+              "title": {
+                "en": "A CD plus concert in a home",
+                "is": "Geisladiskur og tónleikar"
+              },
+              "description": {
+                "en": "A private concert in your home",
+                "is": "Einkatónleikar heima hjá þér"
+              },
+              "image": "/projects/123/24234.jpg",
+              "custom_questions": [
+                {
+                  "en": "What is the delivery address?",
+                  "is": "Hvaða heimilisfang á að senda á?"
+                }
+              ]
+            }
+
+## Reward language [/rewards/{reward_id}/language]
+
++ Parameters
+    + reward_id (string) - ID of the campaign
+
+### Update reward language [PATCH]
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+            {
+                "description": {
+                    "en": "You get a very nice CD in a box."
+                },
+                "title": {
+                    "en": "A CD"
+                }
+
+            }
+
++ Response 200 (application/json)
+
+# Group Pledges
+
+## Campaign pledges [/campaigns/{campaign_id}/pledges/]
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign
+
+### Make a new pledge [POST]
+
+Note: Currently this methods takes info from the meta and uses that to attribute the pledge.
+This may be strange.
+
+The "pledge_meta" must include the fields email, first_name and last_name. The field email must be a valid e-mail address.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+            {
+              "amount": "1",
+              "pledge_meta": {
+                "email": "arnar@karolinafund.com",
+                "first_name": "Arnar",
+                "last_name": "Sigurdsson",
+                "address_street": "Thorsgata 7",
+                "address_postcode": "101",
+                "address_city": "Reykjavik",
+                "address_country": "Iceland"
+              },
+              "reward_id": "22"
+            }
+
++ Response 200 (application/json)
+
+            {
+              "pledge": {
+                "pledge_id":"52c0f3e9-883d-45c4-8409-69f09e01bea6"
+              }
+            }
+
+
+## Payment page [/pledges/{pledge_id}/payment_page/{payment_method}/]
+
+The payment_method parameter is usually "credit_card" but some platforms may have other options like "paytrail" for Mesenaatti.
+
+The success_url, cancel_url and fail_url fields in the body should include urls that the user gets redirected to after performing the payment depending on
+if the payment was successful, cancelled or failed. How this is handled may depend on payment methods.
+
+
++ Parameters
+    + pledge_id (string) - ID of the pledge
+    + payment_method (string)
+
+### Create a link to an externally hosted payment page [POST]
+
++ Request  (application/json)
+
+            {
+              "success_url": "http://www.example.com/success/",
+              "cancel_url": "http://www.example.com/cancel/",
+              "fail_url": "http://www.example.com/fail/"
+
+            }
++ Response 200 (application/json)
+
+            {
+              "payment_page": {
+                "url":"https://www.lemonway.fr/paymentpage/?token=dkak238734l"
+              }
+            }
+
+
+## Pre-Authorization [/pledges/{pledge_id}/preauthorization/]
+
+Pre-Authorization a payment on a card using a payment token.
+
+
++ Parameters
+    + pledge_id (string) - ID of the pledge
+
+### Create a payment  [POST]
+
++ Request  (application/json)
+
+            {
+              "card_token": "xxxx_oijwerlkjlksdfk"
+
+            }
++ Response 200 (application/json)
+
+            {
+              "status": "success"
+            }
+
+# Group Subscriptions
+
+## Subscription to campaign [/campaigns/{campaign_id}/subscriptions/]
+
++ Parameters
+    + campaign_id: 1 (string) - ID of the campaign you want to subscribe to
+
+### Create new subscription [POST]
+
+Make a monthly contribution to this campaign. E-mail address is the address of the user to subscribe. If that user is not registered, the user account will be created.
+
++ Request  (application/json)
+
+    + Body
+
+            {
+                "amount": 10,
+                "email":"arnar@karolinafund.com",
+                "first_name": "Arnar",
+                "last_name": "Sigurdsson"
+
+            }
+
++ Response 200 (application/json)
+
+            {
+              "status": "success",
+              "subscription": {
+                "id": "c793d593-c3cd-4333-b57f-ab31edbef5cb"
+              },
+              "payment_page": {
+                "url": "https://sandbox.karolina.io/subscription/token/form/c793d593-c3cd-4333-b57f-ab31edbef5cb"
+              }
+            }
+## Subscription Card [/subscriptions/{subscription_id}/card/]
+
++ Parameters
+    + subscription_id (string) - ID of the subscription (UUID)
+
+### Update the credit card to use for a subscription [PUT]
+
+Change a credit card to use when charging a subscription. "card_token" is a token that has been obtained from a payment gateway to replace the actual card number (functionality outside of this API). This method works only when using payment gateways that support such tokens, i.e. Borgun RPG.
+
++ Request  (application/json)
+
+    + Body
+
+            {
+                "card_token": "xxxxxxx_yyyy"
+
+            }
+
++ Response 200 (application/json)
+
+            {
+              "status": "success"
+            }
+
 # Group Users
 
 ## Users [/users/]
@@ -694,6 +1106,138 @@ Possible errors:
     + Attributes
       + Include Status error
       + message: No query results for model [Karolina\\Database\\Table\\Tag] 234 (string, fixed)
+
+## My profile [/users/me/profile]
+
+### Get my profile [GET]
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
++ Response 200 (application/json)
+
+            {
+              "profile": {
+                "first_name":"John",
+                "last_name":"Smith",
+                "short_description": "A professor of applied sciences",
+                "long_description": "<h1>This is who I am</h1>",
+                "tags": [
+                  {
+                    "id": "331",
+                    "label": "designer"
+                  }],
+                "links":[
+                  {
+                    "url":"http://mysite.com/mypage",
+                    "title":"My website",
+                    "site":"mysite.com"
+                  }],
+                "experiments": [
+                  {
+                    "experiment_id": "89",
+                    "stage": 0,
+                    "title": "My nice experiment",
+                    "short_description": "Yes yes",
+                    "owner_name": "",
+                    "image": "9d9bb861-c928-4750-8310-dc6261137d19.jpg"
+                  }],
+                "image_collection": {
+                  "profile": {
+                    "filename": "myprofielser.jpg",
+                    "url": "https://s3-eu-west-1.amazonaws.com/agitator-image-host/sandbox/myprofielser.jpg"
+                  }
+                }
+              }
+            }
+
+### Update my profile [PATCH]
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+            {
+              "first_name":"John",
+              "last_name":"Smith",
+              "short_description": "A professor of applied sciences",
+              "long_description": "<h1>This is who I am</h1>"
+            }
+
++ Response 200 (application/json)
+
++ Response 401 (application/json)
+
+            {
+              "status":"invalid_login"
+            }
+
+## My profile image [/users/me/profile/images_collection]
+
+
+### Update my profile image [PATCH]
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+
+            {
+              "images_collection": {
+                "profile" {
+                    "filename": "jongunnar.jpg"
+                }
+              }
+            }
+
+
++ Response 200 (application/json)
+
++ Response 401 (application/json)
+
+            {
+              "status":"invalid_login"
+            }
+
+
+## User links  [/users/me/links/]
+
+### Set my links [POST]
+
+This method replaces the user's current links with the supplied ones.
+Any previously set links that are not sent along will be destroyed.
+The protocol (http://) part of the url is not obligatory.
+In case the protocol is not provided, it will be added automatically on the server-side.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <JWToken>
+
+    + Body
+
+            {
+                "links": [
+                    {
+                        "url": "http://www.mysite.com/mypage",
+                        "title": "My awesome page"
+                    }
+                ]
+            }
+
++ Response 200 (application/json)
 
 # Data Structures
 
