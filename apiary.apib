@@ -230,6 +230,8 @@ Possible errors:
 
 ### Update campaign settings [PATCH]
 
+The keys _project_pic_ and _creator_pic_ should be filenames (e.g. my_picture.png). The backend converts this filename into a URL that you can fetch using [Get campaign](#reference/campaigns/single-campaign/get-campaign)
+
 + Request (application/json)
     + Headers
 
@@ -529,7 +531,7 @@ Possible errors:
 
 ### Change a password [POST]
 
-In order to change the password, you need to first obtain a _password reset token_ (see [#reference/users/users-password-resets/send-password-reset-email Send password reset email]).
+In order to change the password, you need to first obtain a _password reset token_ (see [Send password reset email](#reference/users/users-password-resets/send-password-reset-email)).
 
 Possible errors:
 * Reached rate limit
@@ -841,10 +843,15 @@ Possible errors:
 + title: reward (string)
 + description: This is a reward (string)
 + image (string, nullable)
++ custom_questions (Custom questions, optional)
+
+## Custom question base (object, fixed-type)
++ key (string)
++ text (string)
 
 ## Tag base (object, fixed-type)
 + label: tech (string)
-+ id: 1 (number)
++ id: 1 (string)
 
 ## Link base (object, fixed-type)
 + url: http://www.google.com (string)
@@ -907,7 +914,18 @@ Possible errors:
 + dancing (string),
 + climbing (string)
 
-## Experiments previews (array)
+## Custom questions (array, fixed-type)
++ (Custom question base)
+  + key: custom_question_1 (string)
+  + text: `What size t-shirt do you want?` (string)
++ (Custom question base)
+  + key: custom_question_2 (string)
+  + text: `Which seat do you prefer?` (string)
++ (Custom question base)
+  + key: custom_question_3 (string)
+  + text: `What is your favourite color?` (string)
+
+## Experiments previews (array, fixed-type)
 + (Experiment preview base)
 + (Experiment preview base)
   + experiment_id: 234 (string)
@@ -927,7 +945,7 @@ Possible errors:
   + experiment_id: 789 (string)
   + stage: 5 (number)
 
-## Rewards (array) - An array of different rewards based on the Reward base object
+## Rewards (array, fixed-type)
 + (Reward base)
 + (Reward base)
   + reward_id: 234 (string)
@@ -945,7 +963,7 @@ Possible errors:
   + reward_id: 567 (string)
   + amount: 50 (number)
 
-## Subscription goals (array) - An array of different subscription goals based on the Subscription goal base object
+## Subscription goals (array, fixed-type)
 + (Subscription goal base)
 + (Subscription goal base)
   + goal_id: 234 (string)
@@ -957,7 +975,7 @@ Possible errors:
   + goal_id: 456 (string)
   + target: 400 (number)
 
-## Tags (array) - An array of different tags based on the Tag base object
+## Tags (array, fixed-type)
 + (Tag base)
 + (Tag base)
   + id: 234 (string)
@@ -972,7 +990,7 @@ Possible errors:
   + id: 567 (string)
   + label: IoT (string)
 
-## Links (array) - An array of different links based on the Link base object
+## Links (array, fixed-type)
 + (Link base)
 + (Link base)
   + url: https://twitter.com/MomentsES (string)
@@ -987,7 +1005,7 @@ Possible errors:
   + title: ´´ (string)
   + site: linkedin.com (string)
 
-## Users previews (array) - An array of different user previews based on the User preview base object
+## Users previews (array, fixed-type)
 + (User preview base)
   + image (string, nullable)
 + (User preview base)
@@ -1007,32 +1025,32 @@ Possible errors:
   + user_id: 567 (string)
   + last_name: McLane (string)
 
-## Campaigns previews (array) - An array of different user previews based on the User preview base object
+## Campaigns previews (array, fixed-type)
 + (Campaign preview base)
 + (Campaign preview base)
   + campaign_id: 234 (string)
   + min_goal: 200 (number)
-  + funding_reached: 100
+  + funding_reached: 100 (number)
 + (Campaign preview base)
   + campaign_id: 345 (string)
   + min_goal: 300 (number)
-  + stage: 3
-  + funding_reached: 350
+  + stage: 3 (number)
+  + funding_reached: 350 (number)
 + (Campaign preview base)
   + campaign_id: 456 (string)
   + min_goal: 500 (number)
-  + stage: 4
-  + funding_reached: 600
+  + stage: 4 (number)
+  + funding_reached: 600 (number)
 + (Campaign preview base)
   + campaign_id: 567 (string)
   + min_goal: 1000 (number)
-  + stage: 5
-  + funding_reached: 700
+  + stage: 5 (number)
+  + funding_reached: 700 (number)
 + (Campaign preview base)
   + campaign_id: 678 (string)
   + min_goal: 5000 (number)
-  + stage: 6
-  + funding_reached: 3500
+  + stage: 6 (number)
+  + funding_reached: 3500 (number)
 
 ## Get campaign Response (object, fixed-type)
 + campaign (Campaign base)

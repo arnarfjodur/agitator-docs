@@ -43,6 +43,10 @@ before('Campaigns > Campaigns > Create new campaign > Example 3', function (tran
     transaction.request.headers.Authorization = 'Bearer ' + tokenSample
 })
 
+before('Campaigns > Single campaign > Get campaign > Example 1', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/104
+    transaction.skip = true
+})
 before('Campaigns > Single campaign > Get campaign > Example 2', function (transaction) {
     // TODO: make the private campaignm dynamically instead of hardcoding 2
     replaceCampaignId(transaction, '2')
@@ -298,7 +302,14 @@ before('Users > Users password changes > Change a password > Example 4', functio
     transaction.skip = true
 })
 
+before('Users > Users previews > Get users previews', function (transaction) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/104
+    transaction.skip = true
+})
+
 before('Users > Users profile > Get users profile > Example 1', function (transaction, done) {
+    // BUG: https://github.com/arnarfjodur/Agitator/issues/104
+    transaction.skip = true
     setToken(transaction, done, 'admin')
 })
 before('Users > Users profile > Get users profile > Example 2', function (transaction) {
